@@ -67,16 +67,6 @@ Reviews a WordPress.org plugin `readme.txt` with a structured audit, scores each
 - WordPress Plugin Handbook — [How Your Plugin Assets Work](https://developer.wordpress.org/plugins/wordpress-org/plugin-assets/)
 - SitePoint — [How To Create an Awesome WordPress Page for Your Plugin](https://www.sitepoint.com/create-awesome-wordpress-org-page-plugin/)
 
-## Installation
-
-Download the `.skill` file for the skill you want and open it, Claude will install it automatically. Alternatively, copy the skill folder into your Claude skills directory.
-
-## Creating your own skills
-
-Each skill is a folder containing a `SKILL.md` file with YAML frontmatter (name and description) followed by detailed instructions in Markdown. The description controls when Claude triggers the skill, and the body teaches Claude *how* to execute it.
-
-See the existing skills for the pattern, or use the built-in **skill-creator** skill to scaffold a new one.
-
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
