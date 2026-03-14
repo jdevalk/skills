@@ -69,7 +69,7 @@ Reviews a WordPress.org plugin `readme.txt` with a structured audit, scores each
 
 ## Installation
 
-Download the `.skill` file for the skill you want and open it — Claude will install it automatically. Alternatively, copy the skill folder into your Claude skills directory.
+Download the `.skill` file for the skill you want and open it, Claude will install it automatically. Alternatively, copy the skill folder into your Claude skills directory.
 
 ## Creating your own skills
 
