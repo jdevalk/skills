@@ -5,7 +5,7 @@
 [![Link Check](https://github.com/jdevalk/skills/actions/workflows/link-check.yml/badge.svg)](https://github.com/jdevalk/skills/actions/workflows/link-check.yml)
 [![Validate Skills](https://github.com/jdevalk/skills/actions/workflows/validate-skills.yml/badge.svg)](https://github.com/jdevalk/skills/actions/workflows/validate-skills.yml)
 
-Skills for that optimize your GitHub presence and WordPress plugins. Audit and improve your GitHub repos and profile pages, set up CI/CD pipelines for WordPress plugins, and rewrite WordPress.org readme files for better search rankings and conversions — all through structured, score-based workflows that produce drop-in replacements.
+Skills that optimize your GitHub presence and WordPress plugins readme and GitHub actions. Audit and improve your GitHub repos and profile pages, set up CI/CD pipelines for WordPress plugins, and rewrite WordPress.org readme files for better search rankings and conversions — all through structured, score-based workflows that produce drop-in replacements.
 
 ## Installation
 
