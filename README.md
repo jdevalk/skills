@@ -5,7 +5,7 @@
 [![Link Check](https://github.com/jdevalk/skills/actions/workflows/link-check.yml/badge.svg)](https://github.com/jdevalk/skills/actions/workflows/link-check.yml)
 [![Validate Skills](https://github.com/jdevalk/skills/actions/workflows/validate-skills.yml/badge.svg)](https://github.com/jdevalk/skills/actions/workflows/validate-skills.yml)
 
-A collection of skills for Claude and other agents that automate common developer workflows. Each skill teaches Claude a structured, repeatable process, so instead of giving vague advice, it runs a full audit and produces ready-to-use output.
+Skills for that optimize your GitHub presence and WordPress plugins. Audit and improve your GitHub repos and profile pages, set up CI/CD pipelines for WordPress plugins, and rewrite WordPress.org readme files for better search rankings — all through structured, score-based workflows that produce drop-in replacements.
 
 ## Installation
 
