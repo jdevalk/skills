@@ -1,0 +1,25 @@
+name: Feature request
+description: Propose a new skill, a skill expansion, or repository-level automation improvement.
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem should this solve?
+      description: Describe the user problem or workflow gap.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the skill behavior, references, or templates you want added.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Supporting material
+      description: Include source links, example prompts, or related upstream work if relevant.

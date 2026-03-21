@@ -1,0 +1,41 @@
+name: Bug report
+description: Report a problem in a skill, reference file, eval fixture, or release artifact.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      options:
+        - github-profile
+        - github-repo
+        - wp-github-actions
+        - wp-readme-optimizer
+        - Repository infrastructure
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: Describe the current behavior and the expected behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Include the prompt, relevant files, and steps needed to reproduce.
+      placeholder: |
+        1. Use skill ...
+        2. Provide prompt ...
+        3. Observe ...
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Link to the affected file paths, workflow run, or release asset if applicable.

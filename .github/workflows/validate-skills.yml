@@ -1,12 +1,28 @@
 name: Validate Skills
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
-    paths: ['**/SKILL.md']
+    paths:
+      - '**/SKILL.md'
+      - '**/references/**'
+      - '**/evals/**'
+      - '**/test-cases/**'
+      - '.github/scripts/validate-skills.sh'
+      - '.github/workflows/validate-skills.yml'
   pull_request:
     branches: [main]
-    paths: ['**/SKILL.md']
+    paths:
+      - '**/SKILL.md'
+      - '**/references/**'
+      - '**/evals/**'
+      - '**/test-cases/**'
+      - '.github/scripts/validate-skills.sh'
+      - '.github/workflows/validate-skills.yml'
+
+permissions:
+  contents: read
 
 jobs:
   validate:
@@ -14,34 +30,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check SKILL.md frontmatter
-        run: |
-          status=0
-          for skill in */SKILL.md; do
-            dir=$(dirname "$skill")
-
-            # Check for YAML frontmatter delimiters
-            if ! head -1 "$skill" | grep -q '^---$'; then
-              echo "::error file=$skill::Missing YAML frontmatter (no opening ---)"
-              status=1
-              continue
-            fi
-
-            # Extract frontmatter
-            frontmatter=$(sed -n '1,/^---$/{ /^---$/d; p; }' "$skill" | tail -n +1)
-
-            # Check required fields
-            if ! echo "$frontmatter" | grep -q '^name:'; then
-              echo "::error file=$skill::Missing required 'name' field in frontmatter"
-              status=1
-            fi
-            if ! echo "$frontmatter" | grep -q '^description:'; then
-              echo "::error file=$skill::Missing required 'description' field in frontmatter"
-              status=1
-            fi
-
-            if [ $status -eq 0 ]; then
-              echo "✓ $skill"
-            fi
-          done
-          exit $status
+      - name: Validate skills and bundled fixtures
+        run: bash .github/scripts/validate-skills.sh
