@@ -5,7 +5,7 @@
 [![Link Check](https://github.com/jdevalk/skills/actions/workflows/link-check.yml/badge.svg)](https://github.com/jdevalk/skills/actions/workflows/link-check.yml)
 [![Validate Skills](https://github.com/jdevalk/skills/actions/workflows/validate-skills.yml/badge.svg)](https://github.com/jdevalk/skills/actions/workflows/validate-skills.yml)
 
-Skills that optimize your GitHub presence and WordPress plugins readme and GitHub actions. Audit and improve your GitHub repos and profile pages, set up CI/CD pipelines for WordPress plugins, and rewrite WordPress.org readme files for better search rankings and conversions — all through structured, score-based workflows that produce drop-in replacements.
+Skills that optimize your GitHub presence, WordPress plugins, and EmDash plugins. Audit and improve your GitHub repos and profile pages, set up CI/CD pipelines for WordPress and EmDash plugins, and rewrite WordPress.org readme files for better search rankings and conversions — all through structured, score-based workflows that produce drop-in replacements.
 
 ## Installation
 
@@ -63,6 +63,21 @@ Sets up a complete GitHub Actions CI/CD pipeline for WordPress plugins. Analyzes
 - [10up/action-wordpress-plugin-deploy](https://github.com/10up/action-wordpress-plugin-deploy) — Deploy to WordPress.org
 - [WordPress/action-wp-playground-pr-preview](https://github.com/WordPress/action-wp-playground-pr-preview) — Playground PR previews
 - WordPress Developer Blog — [How to add automated unit tests to your WordPress plugin](https://developer.wordpress.org/news/2025/12/how-to-add-automated-unit-tests-to-your-wordpress-plugin/)
+
+</details>
+
+### 🔷 EmDash GitHub Actions
+
+Sets up GitHub Actions CI/CD workflows for EmDash plugins. Analyzes your plugin's structure (TypeScript source, React admin UI, tests, npm publishing) and creates the right set of workflows: TypeScript type-checking with `emdash` types, ESLint linting, Vitest testing, npm security auditing, and automated npm publishing on release.
+
+**Trigger phrases:** *"add CI to my EmDash plugin"*, *"set up GitHub Actions for my EmDash plugin"*, *"publish my EmDash plugin to npm automatically"*
+
+<details>
+<summary><strong>Sources</strong></summary>
+
+- [EmDash CMS](https://github.com/emdash-cms/emdash) — Full-stack TypeScript CMS based on Astro
+- GitHub Docs — [Publishing Node.js packages](https://docs.github.com/en/actions/use-cases-and-examples/publishing-packages/publishing-nodejs-packages)
+- TypeScript Docs — [Compiler Options](https://www.typescriptlang.org/tsconfig/)
 
 </details>
 
