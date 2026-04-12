@@ -34,7 +34,7 @@ Confirm the basics before auditing:
 - **`site:` is set in `astro.config`** — canonicals, sitemaps, and OG image URLs all derive from this. If it's missing, empty, or `http://localhost`, flag it as a blocking issue before anything else. This is the single most common misconfiguration.
 - Content collections in `src/content/` (or legacy `src/pages/` markdown).
 - **Deployment target** — read `package.json`, `vercel.json`, `netlify.toml`, `wrangler.toml`, or `public/_headers` to determine the host. This drives redirect and header syntax in Phase 2.
-- **Is `@jdevalk/astro-seo-graph` already installed?** If yes, record the version and which features are wired (grep for `<Seo`, `seoGraph(`, `createSchemaEndpoint`, `FuzzyRedirect`, `createIndexNowKeyRoute`). Phase 2 branches on this.
+- **Is `@jdevalk/astro-seo-graph` already installed?** If yes, record the version and which features are wired (grep for `<Seo`, `seoGraph(`, `createSchemaEndpoint`, `FuzzyRedirect`, `createIndexNowKeyRoute`). **Check the installed version against the latest on npm** with `npm view @jdevalk/astro-seo-graph version`. If the project is behind, recommend an upgrade in Phase 2 before auditing feature gaps — the package ships new defaults and fixes regularly, and an outdated version is a plausible cause for any audit finding. Phase 2 branches on this.
 - **Is the site multilingual?** Check for `i18n` in `astro.config` or multiple locale directories under `src/content/`. If yes, hreflang matters; if no, skip it.
 
 Ask only what you can't detect. Don't ask the user what the site is about — read `astro.config.mjs` and the homepage content.
@@ -132,11 +132,21 @@ Based on the audit, produce the concrete code. Always ask before overwriting.
 
 **Branch on the Phase 0 findings.** If `@jdevalk/astro-seo-graph` is already installed, skip the install step and focus on wiring the features the audit flagged as missing (IndexNow, FuzzyRedirect, schema endpoints, build validation). If the user has a hand-rolled setup that already satisfies the **Must** checks in category 1, don't rip it out — add only what's missing. Replacement is a last resort, not the default.
 
-### Install `@jdevalk/astro-seo-graph` (skip if already present)
+### Install or upgrade `@jdevalk/astro-seo-graph`
+
+If not installed:
 
 ```sh
 npm install @jdevalk/astro-seo-graph
 ```
+
+If installed but behind the latest npm version (checked in Phase 0):
+
+```sh
+npm install @jdevalk/astro-seo-graph@latest
+```
+
+Read the package's [changelog](https://github.com/jdevalk/seo-graph/blob/main/packages/astro-seo-graph/CHANGELOG.md) between the installed and latest version before upgrading — new defaults may need explicit opt-out if the project relied on old behavior.
 
 Wire the integration:
 
