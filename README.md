@@ -5,11 +5,31 @@
 [![Link Check](https://github.com/jdevalk/skills/actions/workflows/link-check.yml/badge.svg)](https://github.com/jdevalk/skills/actions/workflows/link-check.yml)
 [![Validate Skills](https://github.com/jdevalk/skills/actions/workflows/validate-skills.yml/badge.svg)](https://github.com/jdevalk/skills/actions/workflows/validate-skills.yml)
 
-This repository collects Claude Code skills that improve your GitHub presence, WordPress plugins, and EmDash plugins. You can audit and improve your GitHub repos and profile pages, set up CI/CD pipelines, and rewrite WordPress.org readme files for better search rankings and conversions. Each skill is a structured, score-based workflow that produces drop-in replacements.
+This repository collects Claude Code skills that improve your GitHub presence, WordPress plugins, EmDash plugins, Astro sites, and the readability of your writing. You can audit and improve GitHub repos and profile pages, set up CI/CD pipelines for WordPress and EmDash plugins, rewrite WordPress.org readme files for better search rankings, audit Astro site SEO end-to-end, and run a readability pass on drafts. Each skill is a structured, score-based workflow that produces drop-in replacements.
 
 ## Installation
 
-Download the `.skill` file for the skill you want from the [latest release](https://github.com/jdevalk/skills/releases/latest) and open it — Claude will install it automatically. Alternatively, copy the skill folder into your Claude skills directory.
+Pick the option that matches your setup.
+
+### Claude Code (one-click)
+
+Download the `.skill` file for the skill you want from the [latest release](https://github.com/jdevalk/skills/releases/latest) and open it — Claude installs it automatically.
+
+### Any agent that supports the skills format (manual copy)
+
+`.skill` files are plain zip archives. Two ways to install the skill folder:
+
+1. **From a release.** Download the `.skill` from the [latest release](https://github.com/jdevalk/skills/releases/latest), unzip it, and move the resulting folder into your agent's skills directory (for Claude Code that's `~/.claude/skills/`).
+2. **From the repo.** Clone the repo and copy or symlink the skill folder:
+
+   ```sh
+   git clone https://github.com/jdevalk/skills.git
+   cp -r skills/astro-seo ~/.claude/skills/
+   # or, to stay in sync with upstream:
+   ln -s "$(pwd)/skills/astro-seo" ~/.claude/skills/astro-seo
+   ```
+
+Each skill is self-contained: the folder holds a `SKILL.md` plus any referenced assets. If your agent uses a different skills directory, substitute that path.
 
 ## What's included
 
