@@ -252,6 +252,7 @@ Seeding `_redirects` from scratch is the unpleasant part. Practical approach:
 - Commit the table once, maintain it going forward whenever you change a slug.
 
 Syntax depends on the host:
+
 - **Cloudflare Pages / Netlify:** `public/_redirects` — `/old-path /new-path 301` per line.
 - **Vercel:** `vercel.json` with a `redirects` array.
 - **Other hosts:** server config (nginx, Apache, etc.).
