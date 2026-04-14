@@ -1,6 +1,6 @@
 ---
 name: astro-seo
-version: "0.3"
+version: "0.4"
 description: >
   Audits and improves SEO for Astro sites. Use when the user asks to audit,
   set up, or improve SEO on an Astro site, or mentions head metadata,
@@ -90,6 +90,7 @@ Skip **Nice** checks for small personal blogs unless the user asks for the full 
 - Generated at build time via satori + sharp, or manual?
 - JPEG (social platforms don't reliably support WebP/AVIF)?
 - Route derives OG URL from the slug automatically?
+- Every `<img>` in rendered HTML has an `alt` attribute (or `alt=""` / `role="presentation"` for decorative images)? `validateImageAlt` on `seoGraph()` catches this at build time in ≥ 1.1.0.
 
 ### 5. Sitemaps and indexing (/10)
 
@@ -98,7 +99,7 @@ Skip **Nice** checks for small personal blogs unless the user asks for the full 
 - **Must** — RSS feed exists (`@astrojs/rss`), advertised via `<link rel="alternate" type="application/rss+xml">`, contains full post content (not truncated excerpts).
 - **Should** — split per-collection via `chunks` option (`sitemap-posts-0.xml`, etc.) — much easier to debug indexing in GSC.
 - **Should** — `lastmod` populated from git commit timestamps, not frontmatter dates or CI file timestamps.
-- **Should** — IndexNow integrated and submitting on each build, with key verification route at `/[key].txt`.
+- **Should** — IndexNow integrated and submitting on each build, with key verification route at `/[key].txt`. ≥ 1.0.1 excludes `/404` from submissions by default.
 
 ### 6. Agent discovery (/10)
 
@@ -127,7 +128,8 @@ Skip **Nice** checks for small personal blogs unless the user asks for the full 
 ### 9. Build-time validation and content quality (/10)
 
 - **Must** — `seoGraph()` integration running on each build with H1 validation, duplicate title/description detection, and JSON-LD schema validation enabled.
-- **Should** — broken link checker in CI. A [lychee](https://github.com/lycheeverse/lychee-action) GitHub Action on every push to content files catches dead links before they go live; a weekly scheduled run catches link rot as external sites move or disappear. Broken outbound links are a bad UX and a negative trust signal.
+- **Should** — `validateImageAlt`, `validateMetadataLength`, and `validateInternalLinks` enabled on `seoGraph()` (all default `true` in ≥ 1.1.0). They catch missing alt text, titles or descriptions outside SERP bounds (defaults: title 30–65, description 70–200), and internal links that 404 or hit a trailing-slash mismatch.
+- **Should** — broken link checker in CI for _external_ links. A [lychee](https://github.com/lycheeverse/lychee-action) GitHub Action on every push to content files catches dead links before they go live; a weekly scheduled run catches link rot as external sites move or disappear. Broken outbound links are a bad UX and a negative trust signal. Internal links are covered by `validateInternalLinks` at build time; lychee handles everything else.
 - **Should** — content audited for readability (lead sentences, sentences under 20 words, transitions). Phase 2.5 chains this in via `readability-check`.
 
 ---
@@ -154,6 +156,8 @@ npm install @jdevalk/astro-seo-graph@latest
 
 Read the package's [changelog](https://github.com/jdevalk/seo-graph/blob/main/packages/astro-seo-graph/CHANGELOG.md) between the installed and latest version before upgrading — new defaults may need explicit opt-out if the project relied on old behavior.
 
+**1.0.0 migration note.** `<Seo>` is now a first-party component (drops the `astro-seo` dep) and `buildAstroSeoProps` / the `AstroSeoProps` type were removed. If the project called `buildAstroSeoProps` directly, migrate to `buildSeoContext` (returns a flat `SeoContext`). Sites using `<Seo>` through the normal prop interface need no code change — the upgrade also fixes three silent bugs (`articlePublisher` now renders, canonical no longer leaks on `noindex` pages, single `og:image` and single `<meta name="robots">` per page).
+
 Wire the integration:
 
 ```js
@@ -167,6 +171,9 @@ export default defineConfig({
             validateH1: true,
             validateDuplicateMeta: true,
             validateSchema: true,
+            validateImageAlt: true,
+            validateMetadataLength: true,
+            validateInternalLinks: true,
             indexNow: {
                 key: 'REPLACE_WITH_GENERATED_KEY',
                 host: 'example.com',
