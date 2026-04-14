@@ -1,0 +1,9 @@
+{
+    "astro-seo": "0.3",
+    "emdash-github-actions": "0.3",
+    "github-profile": "0.3",
+    "github-repo": "0.3",
+    "readability-check": "0.3",
+    "wp-github-actions": "0.3",
+    "wp-readme-optimizer": "0.3"
+}

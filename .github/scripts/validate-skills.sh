@@ -38,7 +38,7 @@ validate_skill_frontmatter() {
   local skill="$1"
   local dir
   local frontmatter
-  local required_fields=("name" "description")
+  local required_fields=("name" "description" "version")
 
   dir="$(dirname "$skill")"
   frontmatter="$(extract_frontmatter "$skill")" || return
@@ -53,6 +53,68 @@ validate_skill_frontmatter() {
   declared_name="$(sed -n 's/^name:[[:space:]]*//p' <<<"$frontmatter" | head -n 1)"
   if [[ -n "$declared_name" && "$declared_name" != "$(basename "$dir")" ]]; then
     error "$skill" "Frontmatter name '${declared_name}' must match directory name '$(basename "$dir")'"
+  fi
+}
+
+validate_versions_manifest() {
+  local manifest="versions.json"
+
+  if [[ ! -f "$manifest" ]]; then
+    error "$manifest" "Missing versions.json at repository root"
+    return
+  fi
+
+  if ! python3 - "$manifest" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+manifest_path = Path(sys.argv[1])
+
+try:
+    manifest = json.loads(manifest_path.read_text())
+except json.JSONDecodeError as exc:
+    print(f"::error file={manifest_path}::Invalid JSON: {exc}")
+    sys.exit(1)
+
+if not isinstance(manifest, dict):
+    print(f"::error file={manifest_path}::versions.json must be a JSON object")
+    sys.exit(1)
+
+skill_dirs = sorted(p.parent.name for p in Path(".").glob("*/SKILL.md"))
+errors = []
+
+for skill in skill_dirs:
+    skill_md = Path(skill) / "SKILL.md"
+    frontmatter_version = None
+    in_frontmatter = False
+    for line in skill_md.read_text().splitlines():
+        if line.strip() == "---":
+            if in_frontmatter:
+                break
+            in_frontmatter = True
+            continue
+        if in_frontmatter and line.startswith("version:"):
+            frontmatter_version = line.split(":", 1)[1].strip().strip('"').strip("'")
+            break
+
+    manifest_version = manifest.get(skill)
+    if manifest_version is None:
+        errors.append(f"::error file={manifest_path}::Skill '{skill}' missing from versions.json")
+    elif frontmatter_version and manifest_version != frontmatter_version:
+        errors.append(
+            f"::error file={skill_md}::Frontmatter version '{frontmatter_version}' does not match versions.json entry '{manifest_version}'"
+        )
+
+for extra in sorted(set(manifest) - set(skill_dirs)):
+    errors.append(f"::error file={manifest_path}::versions.json references unknown skill '{extra}'")
+
+if errors:
+    print("\n".join(errors))
+    sys.exit(1)
+PY
+  then
+    status=1
   fi
 }
 
@@ -110,6 +172,8 @@ PY
 main() {
   shopt -s nullglob
   local skill
+
+  validate_versions_manifest
 
   for skill in */SKILL.md; do
     local before=$status

@@ -1,5 +1,6 @@
 ---
 name: github-profile
+version: "0.3"
 description: >
   Audits and optimizes GitHub profile pages — profile README, metadata fields, pinned repositories,
   stats widgets, and contribution visibility. Use this skill whenever the user asks to improve,
@@ -13,6 +14,10 @@ description: >
 # GitHub Profile Optimizer
 
 This skill audits a GitHub profile and generates an optimized profile README along with recommendations for metadata, pinned repositories, and stats widgets. A strong GitHub profile is a developer's storefront — it shapes perception before anyone reads a line of code.
+
+## Check for skill updates
+
+Before running, fetch <https://raw.githubusercontent.com/jdevalk/skills/main/versions.json> and compare the `github-profile` entry to the `version:` in this file's frontmatter. If the manifest version is higher, tell the user this skill is out of date and point them to the [latest release](https://github.com/jdevalk/skills/releases/latest). Continue regardless — the check is informational, not a blocker.
 
 ## Workflow
 

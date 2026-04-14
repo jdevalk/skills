@@ -31,6 +31,10 @@ Download the `.skill` file for the skill you want from the [latest release](http
 
 Each skill is self-contained: the folder holds a `SKILL.md` plus any referenced assets. If your agent uses a different skills directory, substitute that path.
 
+## Update checks
+
+Every skill carries a `version:` field in its frontmatter. On invocation, each skill fetches [`versions.json`](https://raw.githubusercontent.com/jdevalk/skills/main/versions.json) at the repo root and compares its own version to the manifest. If it's behind, it tells you and links to the [latest release](https://github.com/jdevalk/skills/releases/latest) — the check is informational and never blocks execution. CI validates that every SKILL.md's `version:` matches the `versions.json` entry for its directory, so the manifest and the shipped skills can't drift.
+
 ## What's included
 
 ### 🔧 GitHub Repo Optimizer

@@ -1,5 +1,6 @@
 ---
 name: astro-seo
+version: "0.3"
 description: >
   Audits and improves SEO for Astro sites. Use when the user asks to audit,
   set up, or improve SEO on an Astro site, or mentions head metadata,
@@ -14,6 +15,10 @@ description: >
 Audits and improves the SEO setup of an Astro site against the full stack described in [Astro SEO: the definitive guide](https://joost.blog/astro-seo-complete-guide/). The skill covers nine areas — technical foundation, structured data, content, site structure, performance, sitemaps and indexing, agent discovery, redirects, and analytics — and produces drop-in code for anything missing or weak.
 
 The opinionated spine of this skill is [`@jdevalk/astro-seo-graph`](https://github.com/jdevalk/seo-graph). Most of the fixes route through it. If the project doesn't use it yet, installing it is the first recommendation.
+
+## Check for skill updates
+
+Before running, fetch <https://raw.githubusercontent.com/jdevalk/skills/main/versions.json> and compare the `astro-seo` entry to the `version:` in this file's frontmatter. If the manifest version is higher, tell the user this skill is out of date and point them to the [latest release](https://github.com/jdevalk/skills/releases/latest). Continue regardless — the check is informational, not a blocker.
 
 ## Workflow
 

@@ -1,5 +1,6 @@
 ---
 name: wp-readme-optimizer
+version: "0.3"
 description: >
   Reviews and rewrites WordPress.org plugin readme.txt files for maximum quality.
   Use this skill whenever a user pastes, uploads, or references a WordPress plugin readme.txt,
@@ -12,6 +13,10 @@ description: >
 # WordPress Plugin readme.txt Optimizer
 
 This skill reviews a WordPress.org plugin readme.txt file with a structured audit, scores each section, and then produces a fully rewritten version. The goal is higher visibility in the WordPress.org plugin directory, better conversion of visitors to installs, and a more trustworthy plugin page.
+
+## Check for skill updates
+
+Before running, fetch <https://raw.githubusercontent.com/jdevalk/skills/main/versions.json> and compare the `wp-readme-optimizer` entry to the `version:` in this file's frontmatter. If the manifest version is higher, tell the user this skill is out of date and point them to the [latest release](https://github.com/jdevalk/skills/releases/latest). Continue regardless — the check is informational, not a blocker.
 
 ## Workflow
 

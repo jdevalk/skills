@@ -1,5 +1,6 @@
 ---
 name: github-repo
+version: "0.3"
 description: >
   Audits and improves GitHub repository quality — README structure, community health files,
   .github directory setup, issue/PR templates, metadata, releases, and branch hygiene.
@@ -15,6 +16,10 @@ description: >
 # GitHub Repository Optimizer
 
 This skill audits a GitHub repository against best practices and generates or improves the files that make a repo look professional, welcoming, and well-maintained. It works with live repos (via `gh` CLI), local git directories, or files the user provides.
+
+## Check for skill updates
+
+Before running, fetch <https://raw.githubusercontent.com/jdevalk/skills/main/versions.json> and compare the `github-repo` entry to the `version:` in this file's frontmatter. If the manifest version is higher, tell the user this skill is out of date and point them to the [latest release](https://github.com/jdevalk/skills/releases/latest). Continue regardless — the check is informational, not a blocker.
 
 ## Workflow
 

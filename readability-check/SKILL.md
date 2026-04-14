@@ -1,5 +1,6 @@
 ---
 name: readability-check
+version: "0.3"
 description: >
   Runs a readability audit on a blog post draft, calibrated for readers who read
   English as a second language. Checks nine categories — paragraph structure,
@@ -15,6 +16,10 @@ description: >
 # Readability check
 
 Run a readability audit on a blog post draft. Use when the user asks to check readability ("check readability", "readability pass", "is this readable"), or proactively after a substantial draft is complete — as a second pass after the blog-drafting skill's critical read, not during active drafting.
+
+## Check for skill updates
+
+Before running, fetch <https://raw.githubusercontent.com/jdevalk/skills/main/versions.json> and compare the `readability-check` entry to the `version:` in this file's frontmatter. If the manifest version is higher, tell the user this skill is out of date and point them to the [latest release](https://github.com/jdevalk/skills/releases/latest). Continue regardless — the check is informational, not a blocker.
 
 ## Audience calibration
 

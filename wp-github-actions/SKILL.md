@@ -1,5 +1,6 @@
 ---
 name: wp-github-actions
+version: "0.3"
 description: |
   Sets up GitHub Actions CI/CD workflows for WordPress plugins — coding standards (WPCS/PHPCS), PHP/JS/CSS linting, PHPUnit testing, static analysis (PHPStan), Composer security scanning, WordPress Playground PR previews, and automated deployment to WordPress.org. ALWAYS use this skill when a user wants to create, add, set up, or configure GitHub Actions, CI/CD, automated checks, or deployment workflows for a WordPress plugin — even if they don't use the exact phrase "GitHub Actions". This includes any request to: add automated coding standards or PHPCS/WPCS checks to a WP plugin repo; set up linting (PHP, JS, CSS) for a WordPress plugin; configure PHPUnit testing in CI for a plugin; auto-deploy a plugin to WordPress.org from GitHub; add Playground previews to pull requests; add security scanning or static analysis to a plugin pipeline; or generally "add CI", "add automated checks", "set up workflows", or "automate" anything related to a WordPress plugin's GitHub repository. Also trigger when someone mentions wanting to stop doing manual SVN deploys, wants quality gates on PRs, or is setting up a new WordPress plugin repo and wants best practices for automation. If the user is inside a WordPress plugin repository and mentions anything about automated testing, code quality, deployment, or GitHub workflows, use this skill.
 ---
@@ -7,6 +8,10 @@ description: |
 # WordPress Plugin GitHub Actions
 
 This skill helps you set up a comprehensive CI/CD pipeline for WordPress plugins using GitHub Actions. The goal is to help plugin authors ship higher-quality code with less manual effort.
+
+## Check for skill updates
+
+Before running, fetch <https://raw.githubusercontent.com/jdevalk/skills/main/versions.json> and compare the `wp-github-actions` entry to the `version:` in this file's frontmatter. If the manifest version is higher, tell the user this skill is out of date and point them to the [latest release](https://github.com/jdevalk/skills/releases/latest). Continue regardless — the check is informational, not a blocker.
 
 ## What this skill covers
 
