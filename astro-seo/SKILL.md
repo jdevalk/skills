@@ -127,8 +127,10 @@ Skip **Nice** checks for small personal blogs unless the user asks for the full 
 
 ### 9. Build-time validation and content quality (/10)
 
-- **Must** — `seoGraph()` integration running on each build with H1 validation, duplicate title/description detection, and JSON-LD schema validation enabled.
-- **Should** — `validateImageAlt`, `validateMetadataLength`, and `validateInternalLinks` enabled on `seoGraph()` (all default `true` in ≥ 1.1.0). They catch missing alt text, titles or descriptions outside SERP bounds (defaults: title 30–65, description 70–200), and internal links that 404 or hit a trailing-slash mismatch.
+- **Must** — `seoGraph()` integration running on each build with `validateH1` and `validateUniqueMetadata` enabled. For JSON-LD validation, pass `warnOnDanglingReferences: true` to `assembleGraph()` in `seo-graph-core` — that's the assembly-time check, not an integration option.
+- **Should** — `validateImageAlt`, `validateMetadataLength`, and `validateInternalLinks` enabled on `seoGraph()` (all default `true` in ≥ 1.1.0). They catch missing alt text, titles or descriptions outside SERP bounds (defaults: title 30–65, description 70–200), and internal links that 404 or hit a trailing-slash mismatch. Two known rough edges worth flagging up front:
+    - **`validateInternalLinks` only knows about built HTML pages.** Links to `public/` assets (`/images/foo.avif`, `/fonts/inter.woff2`) get flagged as 404. Use the `skip` callback to exclude them (see the config example above). Wildcards, splats, and `[slug]` routes also need `skip`.
+    - **`validateMetadataLength` can under-count descriptions containing a raw apostrophe.** Its extractor terminates early on `'`, yielding absurdly short lengths. Workaround: use typographic apostrophes (`’`) in copy — better typography regardless. Upstream bug.
 - **Should** — broken link checker in CI for _external_ links. A [lychee](https://github.com/lycheeverse/lychee-action) GitHub Action on every push to content files catches dead links before they go live; a weekly scheduled run catches link rot as external sites move or disappear. Broken outbound links are a bad UX and a negative trust signal. Internal links are covered by `validateInternalLinks` at build time; lychee handles everything else.
 - **Should** — content audited for readability (lead sentences, sentences under 20 words, transitions). Phase 2.5 chains this in via `readability-check`.
 
@@ -169,11 +171,15 @@ export default defineConfig({
     integrations: [
         seoGraph({
             validateH1: true,
-            validateDuplicateMeta: true,
-            validateSchema: true,
+            validateUniqueMetadata: true,
             validateImageAlt: true,
             validateMetadataLength: true,
-            validateInternalLinks: true,
+            validateInternalLinks: {
+                skip: (href) =>
+                    href.startsWith('/images/') ||
+                    href.startsWith('/fonts/') ||
+                    href.startsWith('/api/'),
+            },
             indexNow: {
                 key: 'REPLACE_WITH_GENERATED_KEY',
                 host: 'example.com',
@@ -238,7 +244,60 @@ sitemap({
 
 ### OG image route
 
-Stand up `/og/[...slug].jpg` using satori + sharp. If the project already has one, check it outputs 1200×675 JPEG.
+The goal: every page has a 1200×675 JPEG OG image with a deterministic URL derived from the slug, generated at build time. No manual upload step, no runtime rendering.
+
+**Pick the renderer.**
+
+- **Text-heavy cards** (title + subtitle + site name over a solid or gradient background) — use [`satori`](https://github.com/vercel/satori) to render JSX/HTML to SVG, then [`sharp`](https://sharp.pixelplumbing.com/) to rasterize to JPEG. This is the common case. Satori doesn't support every CSS feature — stick to flexbox, basic typography, absolute positioning.
+- **Photo-heavy cards** (hero image with a title overlay) — skip satori. Use `sharp`'s composite pipeline: load the hero from `public/`, resize to 1200×675, composite an SVG overlay for the title band, encode JPEG. Faster and avoids satori's CSS limits.
+
+**Build-time route vs. build script.**
+
+A route at `src/pages/og/[...slug].jpg.ts` that runs in `getStaticPaths` is the cleanest fit for Astro: one file, colocated with the content, no external build step, per-page URLs just work. Use a standalone Node build script that writes to `dist/og/` only when you need to share the renderer across sites or run it outside Astro. Default to the route.
+
+**Fonts.**
+
+Satori needs font buffers, not CSS. Commit a `woff2` (or TTF — satori accepts both) under `src/fonts/` and read it with `fs.readFileSync` at build time. For text that might contain glyphs the primary font doesn't cover (CJK, emoji, extended Latin), pass multiple fonts in the `satori({ fonts: [...] })` array — satori falls back through them in order. Don't rely on system fonts; the build environment won't have them.
+
+**Localized sites.**
+
+Include the locale in the slug (`/og/en/<slug>.jpg`, `/og/nl/<slug>.jpg`) and resolve per-locale strings (site name, tagline) inside the route. If the primary font doesn't cover the target language, add a locale-appropriate fallback font to the `fonts` array before rendering.
+
+**Minimal satori route sketch:**
+
+```ts
+// src/pages/og/[...slug].jpg.ts
+import satori from 'satori';
+import sharp from 'sharp';
+import fs from 'node:fs';
+import { getCollection } from 'astro:content';
+
+const font = fs.readFileSync('src/fonts/Inter-Bold.woff2');
+
+export async function getStaticPaths() {
+    const posts = await getCollection('blog');
+    return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+export async function GET({ props }) {
+    const svg = await satori(
+        {
+            type: 'div',
+            props: {
+                style: { /* flex, padding, colors, etc. */ },
+                children: [/* title + subtitle nodes */],
+            },
+        },
+        { width: 1200, height: 675, fonts: [{ name: 'Inter', data: font, weight: 700, style: 'normal' }] }
+    );
+    const jpg = await sharp(Buffer.from(svg)).jpeg({ quality: 90 }).toBuffer();
+    return new Response(jpg, { headers: { 'Content-Type': 'image/jpeg' } });
+}
+```
+
+Wire the URL into `<Seo>` as the `openGraph.image` value.
+
+**If the project already has an OG route,** verify: output is 1200×675 JPEG (not WebP/AVIF/PNG — social platforms don't all support those), the URL is deterministic from the slug, and the route runs at build time (not SSR on request — that's a per-crawl cost).
 
 ### Schema endpoints and schema map
 
