@@ -179,7 +179,10 @@ export default defineConfig({
                 host: 'example.com',
                 siteUrl: 'https://example.com',
             },
-            llmsTxt: true,
+            llmsTxt: {
+                title: 'Example',
+                siteUrl: 'https://example.com',
+            },
         }),
     ],
 });
@@ -243,7 +246,7 @@ Each endpoint collects every entry in a content collection, builds the JSON-LD g
 
 ### `llms.txt`
 
-Enable the `llmsTxt` option on the `seoGraph()` integration (requires `@jdevalk/astro-seo-graph` ≥ 0.9.0). It writes `llms.txt` at the root of the build output by auto-collecting `<title>` + meta description from each built page. Pass `sections` to curate manually, or use `filter` / `autoSectionName` / `outputPath` to tune the auto-generated output. For rendering outside the integration hook, import `renderLlmsTxt` from the package.
+Pass an options object to `llmsTxt` on the `seoGraph()` integration (requires `@jdevalk/astro-seo-graph` ≥ 0.9.0). Required fields: `title` (the H1 for the file) and `siteUrl` (used to resolve crawled HTML paths). Optional: `summary` (rendered as a blockquote), `details` (extra paragraphs), `sections` (user-supplied sections; when given, no pages are auto-collected), `filter` / `autoSectionName` / `outputPath` to tune the auto-generated output. For rendering outside the integration hook, import `renderLlmsTxt` from the package.
 
 ### RSS feed
 
