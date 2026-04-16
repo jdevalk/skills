@@ -1,6 +1,6 @@
 ---
 name: github-repo
-version: "0.4"
+version: "0.5"
 description: >
   Audits and improves GitHub repository quality — README structure, community health files,
   .github directory setup, issue/PR templates, metadata, releases, and branch hygiene.
@@ -289,11 +289,14 @@ Adapt the fields to the specific project type (e.g., a CLI tool wouldn't ask for
 
 ---
 
-## Phase 2.5: Readability pass
+## Phase 2.5: Metadata and readability pass
 
-Before verifying, run a readability pass on every prose-heavy file you generated or rewrote — at minimum the README, but also CONTRIBUTING.md and SECURITY.md if you produced them. Invoke the `readability-check` skill on each file.
+Before verifying, run two passes on the copy you generated.
 
-Apply the fixes it flags as ⚠ or ✗ directly in the generated file. You don't need to reach a perfect Flesch score; the goal is that the README doesn't fail obvious checks (very long sentences, passive voice stacks, missing lead sentences, opening paragraph that doesn't state what the project is). Skim the report, apply the concrete fixes, move on. Skip the pass for code-heavy files (issue templates, workflow YAML) where the readability checks don't apply.
+1. **Metadata pass — `metadata-check` skill.** Run it on the repo description (the tagline GitHub shows in search and on profile cards — the first ~100 chars carry) and on the short blurb you wrote at the top of the README if you produced one. Short, high-visibility strings benefit from front-loading, concreteness, and one-idea-per-field.
+2. **Prose pass — `readability-check` skill.** Run it on every prose-heavy file — at minimum the README body, plus CONTRIBUTING.md and SECURITY.md if you produced them.
+
+Apply the fixes either skill flags as ⚠ or ✗ directly in the generated files. You don't need to reach a perfect Flesch score; the goal is that the README doesn't fail obvious checks (very long sentences, passive voice stacks, missing lead sentences, opening paragraph that doesn't state what the project is). Skim the reports, apply the concrete fixes, move on. Skip both passes for code-heavy files (issue templates, workflow YAML) where the checks don't apply.
 
 ---
 

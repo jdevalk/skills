@@ -1,9 +1,10 @@
 {
-    "astro-seo": "0.6",
+    "astro-seo": "0.7",
     "emdash-github-actions": "0.4",
-    "github-profile": "0.4",
-    "github-repo": "0.4",
-    "readability-check": "0.5",
+    "github-profile": "0.5",
+    "github-repo": "0.5",
+    "metadata-check": "0.1",
+    "readability-check": "0.6",
     "wp-github-actions": "0.4",
-    "wp-readme-optimizer": "0.4"
+    "wp-readme-optimizer": "0.5"
 }

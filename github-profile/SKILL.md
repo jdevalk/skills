@@ -1,6 +1,6 @@
 ---
 name: github-profile
-version: "0.4"
+version: "0.5"
 description: >
   Audits and optimizes GitHub profile pages — profile README, metadata fields, pinned repositories,
   stats widgets, and contribution visibility. Use this skill whenever the user asks to improve,
@@ -249,11 +249,14 @@ Remind the user to **verify their organization's domain** (Settings → Verified
 
 ---
 
-## Phase 2.5: Readability pass
+## Phase 2.5: Metadata and readability pass
 
-Before moving to recommendations, run a readability pass on the generated profile README by invoking the `readability-check` skill. Profile READMEs are short and heavily skimmed — a single long or passive sentence in the bio or "What I'm working on" section stands out more than in a long document.
+Before moving to recommendations, run two passes on the generated content.
 
-Apply the fixes the skill flags as ⚠ or ✗ directly in the README. Pay particular attention to: (1) the bio / opening line, which carries disproportionate weight; (2) the first sentence of each section, since the profile is read by skimming; (3) passive voice, which reads especially flat in first-person content.
+1. **Metadata pass — `metadata-check` skill.** Run it on the GitHub bio (160 chars) and each pinned repository description you recommended rewording. Bios and repo descriptions are short high-value strings — what matters is front-loading, concreteness, no filler, active voice, and truncation fit (GitHub shows the first ~100 chars of a repo description in profile cards and search).
+2. **Prose pass — `readability-check` skill.** Run it on the profile README body. Profile READMEs are short and heavily skimmed — a single long or passive sentence in the "What I'm working on" section stands out more than in a long document.
+
+Apply the fixes either skill flags as ⚠ or ✗ directly. Pay particular attention to: (1) the bio / opening line of the README, which carries disproportionate weight; (2) the first sentence of each README section, since the profile is read by skimming; (3) passive voice, which reads especially flat in first-person content.
 
 ---
 

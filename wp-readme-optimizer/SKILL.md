@@ -1,6 +1,6 @@
 ---
 name: wp-readme-optimizer
-version: "0.4"
+version: "0.5"
 description: >
   Reviews and rewrites WordPress.org plugin readme.txt files for maximum quality.
   Use this skill whenever a user pastes, uploads, or references a WordPress plugin readme.txt,
@@ -171,11 +171,14 @@ Rules for the rewrite:
 
 ---
 
-## Phase 2.5: Readability pass
+## Phase 2.5: Metadata and readability pass
 
-After producing the rewritten readme.txt, run a readability pass on its prose sections by invoking the `readability-check` skill. Run it on the short description and the long description; skip the headers block, changelog, and installation steps (lists, not prose).
+After producing the rewritten readme.txt, run two passes on the copy before presenting it.
 
-The WordPress.org audience is global — a large share of plugin users read English as a second language, which is exactly the calibration the readability skill uses. Apply the fixes the skill flags as ⚠ or ✗ directly in the rewritten readme before presenting it. Pay particular attention to: (1) the short description, where every word counts for both search and conversion; (2) the first paragraph of the long description, which is the install-decision paragraph; (3) FAQ answers, where long sentences bury the answer.
+1. **Metadata pass — `metadata-check` skill.** Run it on the plugin name (`=== Plugin Name ===`), the tagline / short description (150-char SERP field), and each FAQ answer. Every one of these is a short high-value string where Flesch doesn't apply — what matters is front-loading, concreteness, no filler, truncation fit, and one-idea-per-field.
+2. **Prose pass — `readability-check` skill.** Run it on the long description (multi-paragraph prose). Skip the headers block, changelog, and installation steps (lists, not prose).
+
+The WordPress.org audience is global — a large share of plugin users read English as a second language, which is the calibration both skills use. Apply the fixes they flag as ⚠ or ✗ directly in the rewritten readme before presenting it. Pay particular attention to: (1) the short description, where every word counts for both search and conversion; (2) the first paragraph of the long description, which is the install-decision paragraph; (3) FAQ answers, where long sentences bury the answer.
 
 ---
 

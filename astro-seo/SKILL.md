@@ -1,13 +1,13 @@
 ---
 name: astro-seo
-version: "0.6"
+version: "0.7"
 description: >
   Audits and improves SEO for Astro sites. Use when the user asks to audit,
   set up, or improve SEO on an Astro site, or mentions head metadata,
   structured data, JSON-LD, sitemaps, IndexNow, Open Graph images, schema
   endpoints, NLWeb, hreflang, or search engine indexing in an Astro project.
   Produces drop-in code routed through `@jdevalk/astro-seo-graph` and chains
-  into `readability-check` for generated prose.
+  into `metadata-check` for generated SEO strings.
 ---
 
 # Astro SEO
@@ -33,7 +33,7 @@ Substitute `<parent of this skill's directory>` with the absolute path of the di
 1. **Detect the project** — confirm this is an Astro site and understand its shape.
 2. **Audit** — score nine categories and produce actionable findings.
 3. **Improve** — generate or modify files to close the gaps.
-4. **Readability pass** — invoke `readability-check` on any prose the skill generated (titles, descriptions, schema `description` fields, FAQ entries).
+4. **Metadata pass** — invoke `metadata-check` on every short string the skill generated (titles, descriptions, schema `description` fields, FAQ answers, frontmatter excerpts).
 5. **Verify** — run the build, check validations pass, remind the user about non-file tasks (Search Console, Bing Webmaster Tools, IndexNow key verification).
 
 ---
@@ -139,7 +139,7 @@ Skip **Nice** checks for small personal blogs unless the user asks for the full 
 - **Must** — `seoGraph()` integration running on each build with `validateH1` and `validateUniqueMetadata` enabled. For JSON-LD validation, pass `warnOnDanglingReferences: true` to `assembleGraph()` in `seo-graph-core` — that's the assembly-time check, not an integration option.
 - **Should** — `validateImageAlt`, `validateMetadataLength`, and `validateInternalLinks` enabled on `seoGraph()` (all default `true` in ≥ 1.1.0). They catch missing alt text, titles or descriptions outside SERP bounds (defaults: title 30–65, description 70–200), and internal links that 404 or hit a trailing-slash mismatch. Upgrade to ≥ 1.1.1 if the project is on 1.1.0 — that patch release fixes two validator bugs: `validateInternalLinks` now recognises `public/` assets as valid targets (no more false positives on `/images/*` or `/fonts/*`), and `validateMetadataLength` no longer truncates descriptions containing a raw apostrophe. Use `skip` only for SSR-only routes, wildcards, and `[slug]` params.
 - **Should** — broken link checker in CI for _external_ links. A [lychee](https://github.com/lycheeverse/lychee-action) GitHub Action on every push to content files catches dead links before they go live; a weekly scheduled run catches link rot as external sites move or disappear. Broken outbound links are a bad UX and a negative trust signal. Internal links are covered by `validateInternalLinks` at build time; lychee handles everything else.
-- **Should** — content audited for readability (lead sentences, sentences under 20 words, transitions). Phase 2.5 chains this in via `readability-check`.
+- **Should** — SEO strings (titles, descriptions, FAQ answers) audited for metadata quality — front-loading, concreteness, truncation fit, no title/description duplication. Phase 2.5 chains this in via `metadata-check`. Individual post prose can be audited separately via `readability-check`.
 
 ---
 
@@ -430,11 +430,11 @@ Push-triggered runs block broken links from shipping. The weekly run catches ext
 
 ---
 
-## Phase 2.5: Readability pass
+## Phase 2.5: Metadata and readability pass
 
-Invoke the `readability-check` skill in **metadata mode** on every short string the skill generated or modified: page titles, meta descriptions, schema `description` fields, FAQ answers, and any blog post frontmatter `excerpt` values you wrote. Metadata mode skips Flesch and paragraph-level checks (they don't fit a 5-word title) and instead checks front-loading, concreteness, filler, active voice, title/description duplication, difficult words, SERP-truncation fit, and one-idea-per-field. Apply the ⚠ and ✗ fixes directly. Skip the pass entirely for technical strings (URLs, schema `@id` values, enum values).
+Invoke the `metadata-check` skill on every short string the skill generated or modified: page titles, meta descriptions, schema `description` fields, FAQ answers, and any blog post frontmatter `excerpt` values you wrote. It checks front-loading, concreteness, filler, active voice, title/description duplication, difficult words, SERP-truncation fit (title 30–65, description 70–200 — the same bounds `validateMetadataLength` enforces), and one-idea-per-field. Apply the ⚠ and ✗ fixes directly. Skip the pass entirely for technical strings (URLs, schema `@id` values, enum values).
 
-If the project has a blog or docs content collection, note that the same `readability-check` skill (in its default prose mode) can audit individual posts — mention this to the user as a follow-up, but don't audit the entire content corpus yourself.
+If the project has a blog or docs content collection, mention to the user as a follow-up that the `readability-check` skill can audit individual posts for multi-paragraph prose quality — but don't audit the entire content corpus yourself.
 
 ---
 

@@ -179,6 +179,23 @@ Output combines a Flesch Reading Ease score (with target bands) and a per-catego
 
 </details>
 
+### 🏷 Metadata Check
+
+Reviews short high-value strings — page titles, meta descriptions, schema description fields, FAQ answers, GitHub repo taglines, profile bios, social-card copy — where Flesch scoring and paragraph-level readability checks don't apply. Per string, the skill checks:
+
+- Front-loading (most specific word near the start)
+- Concreteness (names, numbers, specific claims)
+- Aggressive filler and hedging removal
+- Active voice
+- No title/description duplication
+- Difficult-word substitution
+- Platform truncation fit (Google SERP, GitHub description, Twitter bio, OG)
+- One idea per field
+
+Output is per-string: the original, length, a ✓/⚠/✗ per check, and a concrete rewrite when something fails. Chained into by `astro-seo`, `wp-readme-optimizer`, `github-repo`, and `github-profile` for their metadata outputs.
+
+**Trigger phrases:** *"check my metadata"*, *"review my tagline"*, *"is this bio any good"*
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).

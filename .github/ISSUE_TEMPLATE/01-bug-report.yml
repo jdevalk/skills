@@ -13,6 +13,7 @@ body:
         - emdash-github-actions
         - github-profile
         - github-repo
+        - metadata-check
         - readability-check
         - wp-github-actions
         - wp-readme-optimizer

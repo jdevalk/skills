@@ -1,25 +1,27 @@
 ---
 name: readability-check
-version: "0.5"
+version: "0.6"
 description: >
-  Runs a readability audit on a blog post draft, calibrated for readers who read
-  English as a second language. Checks nine categories — paragraph structure,
-  opening paragraph strength, tiered sentence length, passive voice, difficult
-  words, filler and hedging, transitions, variation, and heading hierarchy —
-  and reports a Flesch Reading Ease score with a per-category status. Use when
-  the user asks to check readability, run a readability pass, or asks "is this
-  readable", or proactively as a second pass after a substantial draft is
-  complete. Also invoked by the astro-seo, github-repo, github-profile, and
-  wp-readme-optimizer skills on their generated prose, and has a metadata
-  mode for short strings like titles, meta descriptions, and bios where
-  Flesch and paragraph-level checks don't apply.
+  Runs a readability audit on a blog post draft or other multi-paragraph
+  prose, calibrated for readers who read English as a second language.
+  Checks nine categories — paragraph structure, opening paragraph
+  strength, tiered sentence length, passive voice, difficult words,
+  filler and hedging, transitions, variation, and heading hierarchy —
+  and reports a Flesch Reading Ease score with a per-category status.
+  Use when the user asks to check readability, run a readability pass,
+  or asks "is this readable", or proactively as a second pass after a
+  substantial draft is complete. Also invoked by the github-repo,
+  github-profile, and wp-readme-optimizer skills on their generated
+  prose. For short strings (titles, meta descriptions, taglines, bios),
+  use the `metadata-check` skill instead — Flesch and paragraph-level
+  checks don't apply to them.
 ---
 
 # Readability check
 
-Run a readability audit on a blog post draft. Use when the user asks to check readability ("check readability", "readability pass", "is this readable"), or proactively after a substantial draft is complete — as a second pass after the blog-drafting skill's critical read, not during active drafting.
+Run a readability audit on a blog post draft or other multi-paragraph prose. Use when the user asks to check readability ("check readability", "readability pass", "is this readable"), or proactively after a substantial draft is complete — as a second pass after the blog-drafting skill's critical read, not during active drafting.
 
-**Two modes.** The full workflow below targets prose — paragraphs, headings, multi-sentence arguments. For short strings (page titles, meta descriptions, schema `description` fields, FAQ answers, profile bios) jump straight to the **Metadata mode** section near the end — Flesch scoring and paragraph-level checks are meaningless on a 5–30 word string and will mislead.
+For short strings — page titles, meta descriptions, schema `description` fields, FAQ answers, profile bios, repo taglines — use the `metadata-check` skill. Flesch scoring and the nine-category rubric below don't fit a 5–30 word string and will mislead.
 
 ## Check for skill updates
 
@@ -132,23 +134,6 @@ Flesch is mechanical and misses paragraph-level issues, but it's an objective an
 - ✓ **Pass** — no meaningful issues.
 - ⚠ **Needs work** — a few fixable issues; listed below.
 - ✗ **Problem** — systemic issue across the post.
-
-## Metadata mode
-
-For short strings — page titles, meta descriptions, schema `description` fields, FAQ answers, profile bios, repo taglines — skip Flesch and the paragraph-level checks above. They don't apply and they mislead: a 5-word title scores 0 on Flesch; a title can't have "transitions" or a "paragraph structure."
-
-Instead, check these:
-
-- **Front-load the distinguishing word.** The most specific, searchable term sits near the start. "Astro SEO: the definitive guide" beats "The definitive guide to Astro SEO" — the reader's eye hits the topic first.
-- **Concrete over abstract.** Names, numbers, specific claims. "Reduce LCP by 40%" beats "Improve performance significantly."
-- **Filler and hedging — aggressive.** Every word costs shelf space. Cut *really*, *just*, *very*, *actually*, *basically*, *simply*, *a bit*, *kind of*, *I think*. In metadata these aren't style ticks, they're wasted SERP characters.
-- **Active voice unless the object is the subject.** "Audit your GitHub profile" beats "Your GitHub profile can be audited."
-- **No title/description duplication.** A meta description that restates the title burns ~60 of 200 characters for nothing. Description should promise what's *inside* the page, not re-announce what it *is*.
-- **Difficult words — same rule as prose.** Prefer the common synonym unless the domain term is what the user searches for. Between *utilize* and *use*, use *use*.
-- **SERP truncation awareness.** Titles are clipped around 55–65 characters in Google's SERP; descriptions around 155–160. The astro-seo skill's `validateMetadataLength` (title 30–65, description 70–200) is the enforceable version of this. Anything past the cut should be disposable, not a key promise.
-- **One idea per field.** Titles and descriptions that try to promise two things land fuzzy. Pick the sharpest one.
-
-**Output for metadata mode.** Per string, return: the string itself, length (chars), a per-check ✓/⚠/✗ for the points above, and a concrete rewrite if any check failed. No Flesch, no per-category scores from the nine-category list. Keep the audit tight — metadata feedback should be actionable in seconds.
 
 ## Output format
 
