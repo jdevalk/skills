@@ -46,7 +46,7 @@ npx skills update astro-seo
 }
 ```
 
-This runs outside the context window — zero token cost. Remove it if the startup latency bothers you.
+This runs outside the context window on every session start, `/clear`, and compaction — zero token cost. If the latency bothers you on `/clear`, scope it to startup only by checking the `source` field in the hook input.
 
 ## What's included
 
