@@ -17,18 +17,6 @@ description: >
 
 This skill audits a GitHub repository against best practices and generates or improves the files that make a repo look professional, welcoming, and well-maintained. It works with live repos (via `gh` CLI), local git directories, or files the user provides.
 
-## Check for skill updates
-
-Before running, fetch <https://raw.githubusercontent.com/jdevalk/skills/main/versions.json> and compare the `github-repo` entry to the `version:` in this file's frontmatter. If the manifest version is higher, tell the user the skill is out of date and offer to update it now. If they agree, run:
-
-```sh
-curl -fsSL https://github.com/jdevalk/skills/releases/latest/download/github-repo.skill -o /tmp/github-repo.skill \
-  && unzip -oq /tmp/github-repo.skill -d <parent of this skill's directory> \
-  && rm /tmp/github-repo.skill
-```
-
-Substitute `<parent of this skill's directory>` with the absolute path of the directory that contains this skill's folder — you know this from your own skill discovery. After the unzip, ask the user to re-invoke the skill so the new version loads into context. The check is informational and never blocks: if the user declines, continue with the rest of the workflow on the current version.
-
 ## Workflow
 
 1. **Gather repo context** — Determine what we're working with and collect information

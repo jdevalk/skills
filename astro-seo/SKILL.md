@@ -16,18 +16,6 @@ Audits and improves the SEO setup of an Astro site against the full stack descri
 
 The opinionated spine of this skill is [`@jdevalk/astro-seo-graph`](https://github.com/jdevalk/seo-graph). Most of the fixes route through it. If the project doesn't use it yet, installing it is the first recommendation.
 
-## Check for skill updates
-
-Before running, fetch <https://raw.githubusercontent.com/jdevalk/skills/main/versions.json> and compare the `astro-seo` entry to the `version:` in this file's frontmatter. If the manifest version is higher, tell the user the skill is out of date and offer to update it now. If they agree, run:
-
-```sh
-curl -fsSL https://github.com/jdevalk/skills/releases/latest/download/astro-seo.skill -o /tmp/astro-seo.skill \
-  && unzip -oq /tmp/astro-seo.skill -d <parent of this skill's directory> \
-  && rm /tmp/astro-seo.skill
-```
-
-Substitute `<parent of this skill's directory>` with the absolute path of the directory that contains this skill's folder — you know this from your own skill discovery. After the unzip, ask the user to re-invoke the skill so the new version loads into context. The check is informational and never blocks: if the user declines, continue with the rest of the workflow on the current version.
-
 ## Workflow
 
 1. **Detect the project** — confirm this is an Astro site and understand its shape.

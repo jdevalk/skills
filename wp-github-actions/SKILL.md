@@ -9,18 +9,6 @@ description: |
 
 This skill helps you set up a comprehensive CI/CD pipeline for WordPress plugins using GitHub Actions. The goal is to help plugin authors ship higher-quality code with less manual effort.
 
-## Check for skill updates
-
-Before running, fetch <https://raw.githubusercontent.com/jdevalk/skills/main/versions.json> and compare the `wp-github-actions` entry to the `version:` in this file's frontmatter. If the manifest version is higher, tell the user the skill is out of date and offer to update it now. If they agree, run:
-
-```sh
-curl -fsSL https://github.com/jdevalk/skills/releases/latest/download/wp-github-actions.skill -o /tmp/wp-github-actions.skill \
-  && unzip -oq /tmp/wp-github-actions.skill -d <parent of this skill's directory> \
-  && rm /tmp/wp-github-actions.skill
-```
-
-Substitute `<parent of this skill's directory>` with the absolute path of the directory that contains this skill's folder — you know this from your own skill discovery. After the unzip, ask the user to re-invoke the skill so the new version loads into context. The check is informational and never blocks: if the user declines, continue with the rest of the workflow on the current version.
-
 ## What this skill covers
 
 There are several categories of workflows that a healthy WordPress plugin should have. Not every plugin needs all of them — the right mix depends on the plugin's complexity, whether it has JavaScript/CSS assets, whether it uses Composer, etc. Your job is to figure out which ones are relevant and set them up.

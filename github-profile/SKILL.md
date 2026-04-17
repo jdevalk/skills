@@ -15,18 +15,6 @@ description: >
 
 This skill audits a GitHub profile and generates an optimized profile README along with recommendations for metadata, pinned repositories, and stats widgets. A strong GitHub profile is a developer's storefront — it shapes perception before anyone reads a line of code.
 
-## Check for skill updates
-
-Before running, fetch <https://raw.githubusercontent.com/jdevalk/skills/main/versions.json> and compare the `github-profile` entry to the `version:` in this file's frontmatter. If the manifest version is higher, tell the user the skill is out of date and offer to update it now. If they agree, run:
-
-```sh
-curl -fsSL https://github.com/jdevalk/skills/releases/latest/download/github-profile.skill -o /tmp/github-profile.skill \
-  && unzip -oq /tmp/github-profile.skill -d <parent of this skill's directory> \
-  && rm /tmp/github-profile.skill
-```
-
-Substitute `<parent of this skill's directory>` with the absolute path of the directory that contains this skill's folder — you know this from your own skill discovery. After the unzip, ask the user to re-invoke the skill so the new version loads into context. The check is informational and never blocks: if the user declines, continue with the rest of the workflow on the current version.
-
 ## Workflow
 
 1. **Gather profile context** — Understand who this person/org is and what they want to showcase

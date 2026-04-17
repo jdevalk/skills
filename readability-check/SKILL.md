@@ -23,18 +23,6 @@ Run a readability audit on a blog post draft or other multi-paragraph prose. Use
 
 For short strings — page titles, meta descriptions, schema `description` fields, FAQ answers, profile bios, repo taglines — use the `metadata-check` skill. Flesch scoring and the nine-category rubric below don't fit a 5–30 word string and will mislead.
 
-## Check for skill updates
-
-Before running, fetch <https://raw.githubusercontent.com/jdevalk/skills/main/versions.json> and compare the `readability-check` entry to the `version:` in this file's frontmatter. If the manifest version is higher, tell the user the skill is out of date and offer to update it now. If they agree, run:
-
-```sh
-curl -fsSL https://github.com/jdevalk/skills/releases/latest/download/readability-check.skill -o /tmp/readability-check.skill \
-  && unzip -oq /tmp/readability-check.skill -d <parent of this skill's directory> \
-  && rm /tmp/readability-check.skill
-```
-
-Substitute `<parent of this skill's directory>` with the absolute path of the directory that contains this skill's folder — you know this from your own skill discovery. After the unzip, ask the user to re-invoke the skill so the new version loads into context. The check is informational and never blocks: if the user declines, continue with the rest of the workflow on the current version.
-
 ## Audience calibration
 
 Always assume the reader reads English as a second language. That's the default, not a fallback.

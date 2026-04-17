@@ -9,31 +9,44 @@ This repository collects agent skills that improve your GitHub presence, WordPre
 
 ## Installation
 
-Pick the option that matches your setup.
+Install a single skill or all of them via the [skills CLI](https://skills.sh):
 
-### Claude Code (one-click)
+```sh
+# One skill
+npx skills add jdevalk/skills --skill astro-seo
 
-Download the `.skill` file for the skill you want from the [latest release](https://github.com/jdevalk/skills/releases/latest) and open it — Claude installs it automatically.
+# All skills in this repo
+npx skills add jdevalk/skills
+```
 
-### Any agent that supports the skills format (manual copy)
+The CLI supports Claude Code, Cursor, Cline, GitHub Copilot, and 20+ other agents. Use `--agent` to pick which ones.
 
-`.skill` files are plain zip archives. Two ways to install the skill folder:
+## Updating
 
-1. **From a release.** Download the `.skill` from the [latest release](https://github.com/jdevalk/skills/releases/latest), unzip it, and move the resulting folder into your agent's skills directory (for Claude Code that's `~/.claude/skills/`).
-2. **From the repo.** Clone the repo and copy or symlink the skill folder:
+```sh
+# Update all installed skills
+npx skills update
 
-   ```sh
-   git clone https://github.com/jdevalk/skills.git
-   cp -r skills/astro-seo ~/.claude/skills/
-   # or, to stay in sync with upstream:
-   ln -s "$(pwd)/skills/astro-seo" ~/.claude/skills/astro-seo
-   ```
+# Update a single skill
+npx skills update astro-seo
+```
 
-Each skill is self-contained: the folder holds a `SKILL.md` plus any referenced assets. If your agent uses a different skills directory, substitute that path.
+**Optional: auto-check on session start.** Add a `SessionStart` hook to your Claude Code `settings.json` so stale skills are flagged before you hit them:
 
-## Update checks
+```json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "npx skills update -g -y 2>/dev/null"
+      }
+    ]
+  }
+}
+```
 
-Every skill carries a `version:` field in its frontmatter. On invocation, each skill fetches [`versions.json`](https://raw.githubusercontent.com/jdevalk/skills/main/versions.json) at the repo root and compares its own version to the manifest. If it's behind, the skill tells you and **offers to update itself**: with your consent, it downloads the matching `.skill` from the [latest release](https://github.com/jdevalk/skills/releases/latest) and unpacks it over the installed skill directory. The unpack target is resolved from where the running skill actually lives, so this works for any agent — not just Claude Code — as long as its skills directory is writable. Decline and the skill continues on the current version; the check never blocks execution. CI validates that every SKILL.md's `version:` matches the `versions.json` entry for its directory, so the manifest and the shipped skills can't drift.
+This runs outside the context window — zero token cost. Remove it if the startup latency bothers you.
 
 ## What's included
 

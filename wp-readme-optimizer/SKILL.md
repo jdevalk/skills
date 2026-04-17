@@ -14,18 +14,6 @@ description: >
 
 This skill reviews a WordPress.org plugin readme.txt file with a structured audit, scores each section, and then produces a fully rewritten version. The goal is higher visibility in the WordPress.org plugin directory, better conversion of visitors to installs, and a more trustworthy plugin page.
 
-## Check for skill updates
-
-Before running, fetch <https://raw.githubusercontent.com/jdevalk/skills/main/versions.json> and compare the `wp-readme-optimizer` entry to the `version:` in this file's frontmatter. If the manifest version is higher, tell the user the skill is out of date and offer to update it now. If they agree, run:
-
-```sh
-curl -fsSL https://github.com/jdevalk/skills/releases/latest/download/wp-readme-optimizer.skill -o /tmp/wp-readme-optimizer.skill \
-  && unzip -oq /tmp/wp-readme-optimizer.skill -d <parent of this skill's directory> \
-  && rm /tmp/wp-readme-optimizer.skill
-```
-
-Substitute `<parent of this skill's directory>` with the absolute path of the directory that contains this skill's folder — you know this from your own skill discovery. After the unzip, ask the user to re-invoke the skill so the new version loads into context. The check is informational and never blocks: if the user declines, continue with the rest of the workflow on the current version.
-
 ## Workflow
 
 1. **Read the readme.txt** — If a file is attached, read it. If the user pasted content, use that. If neither, ask the user to provide the readme.txt content.
