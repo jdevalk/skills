@@ -48,23 +48,28 @@ The long description is the body of the listing page. Structure it for scanning 
 - This paragraph should answer: "Why should I install this instead of the other five plugins that showed up in search?"
 
 **Features section:**
+
 - Use an H2 heading: `== Features ==` or `== What you get ==`.
-- Present features as benefits with bullet points. Bad: "* SMTP support". Good: "* **Reliable email delivery** — route messages through any SMTP server so nothing lands in spam."
+- Present features as benefits with bullet points. Bad: `* SMTP support`. Good: `* **Reliable email delivery** — route messages through any SMTP server so nothing lands in spam.`
 - Bold the benefit at the start of each bullet, then explain in plain text.
 - Group related features under H3 subheadings if the list is long (8+ items).
 
 **Social proof:**
+
 - If the plugin has notable stats (active installs, star rating, notable users), weave them in. A standalone line like "Trusted by 50,000+ sites" near the top is more effective than burying it in a paragraph.
 - Don't fabricate stats. If the original readme doesn't mention installs or reviews, leave this out.
 
 **Call to action:**
+
 - If there's a Pro version, docs site, or demo, link to it with a clear CTA. Use Markdown links: `[View the demo](https://example.com)`.
 - Place the CTA after the features section, not before.
 
 **Secondary keywords:**
+
 - Weave them into headings, feature bullets, and the closing paragraph. Don't force them — if a keyword doesn't fit naturally, skip it.
 
 **Formatting:**
+
 - Use `== Heading ==` for H2, `= Subheading =` for H3 (WordPress.org readme syntax, not standard Markdown).
 - Use `**bold**` for emphasis, backticks for code references.
 - Keep paragraphs short — 2-4 sentences max. The listing page renders with narrow column width.
@@ -74,17 +79,20 @@ The long description is the body of the listing page. Structure it for scanning 
 Keep installation steps short and standard. Most plugins follow the same pattern.
 
 **Automatic installation (always list first — it's what most users do):**
+
 1. Go to Plugins > Add New in your WordPress dashboard.
 2. Search for "[Plugin Name]".
 3. Click Install Now, then Activate.
 
 **Manual installation:**
+
 1. Download the plugin ZIP from WordPress.org.
 2. Go to Plugins > Add New > Upload Plugin.
 3. Upload the ZIP file and click Install Now.
 4. Activate the plugin.
 
 **Post-activation steps:**
+
 - If the plugin requires configuration after activation (settings page, API key, wizard), add a step: "5. Go to Settings > [Plugin Name] to configure."
 - If no configuration is needed, add: "The plugin works out of the box — no configuration required."
 
@@ -124,7 +132,7 @@ Screenshot captions are indexed by WordPress.org search — they're SEO content,
 
 - Keep the most recent 3-5 versions in the readme. Move older entries to a separate `changelog.txt` if the list is long.
 - Use the format `= X.X.X =` with bullet points underneath.
-- Write entries that communicate user value: "* Fix: Contact form no longer loses submissions when the page is cached" beats "* Fixed caching bug."
+- Write entries that communicate user value: `* Fix: Contact form no longer loses submissions when the page is cached` beats `* Fixed caching bug.`
 - Prefix each bullet with a category: `Fix:`, `Feature:`, `Enhancement:`, `Security:`, `Deprecated:`.
 - Don't rewrite changelog entries that are factually accurate — only improve clarity and formatting.
 
