@@ -35,3 +35,11 @@ This skill is standalone. It does not chain into other skills.
 ```sh
 npx skills add jdevalk/skills --skill wp-github-actions
 ```
+
+## Sources
+
+- Joost de Valk -- [GitHub Actions to keep your WordPress plugin healthy](https://joost.blog/github-actions-wordpress/)
+- [10up/wpcs-action](https://github.com/10up/wpcs-action) -- WordPress Coding Standards GitHub Action
+- [10up/action-wordpress-plugin-deploy](https://github.com/10up/action-wordpress-plugin-deploy) -- Deploy to WordPress.org
+- [WordPress/action-wp-playground-pr-preview](https://github.com/WordPress/action-wp-playground-pr-preview) -- Playground PR previews
+- WordPress Developer Blog -- [How to add automated unit tests to your WordPress plugin](https://developer.wordpress.org/news/2025/12/how-to-add-automated-unit-tests-to-your-wordpress-plugin/)

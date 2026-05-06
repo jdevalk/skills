@@ -33,3 +33,13 @@ The skill also handles organization-level setup -- creating a `.github` repo wit
 ```sh
 npx skills add jdevalk/skills --skill github-repo
 ```
+
+## Sources
+
+- Joost de Valk -- [How to create a healthy GitHub repository](https://joost.blog/healthy-github-repository/)
+- GitHub Docs -- [About READMEs](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes)
+- GitHub Docs -- [Setting guidelines for repository contributors](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/setting-guidelines-for-repository-contributors)
+- GitHub Docs -- [Creating a default community health file](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/creating-a-default-community-health-file)
+- GitHub Docs -- [Configuring issue templates for your repository](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository)
+- GitHub Docs -- [About rulesets](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets)
+- GitHub Docs -- [Customizing your repository's social media preview](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/customizing-your-repositorys-social-media-preview)

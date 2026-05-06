@@ -31,3 +31,9 @@ This skill is standalone. It does not chain into other skills.
 ```sh
 npx skills add jdevalk/skills --skill emdash-github-actions
 ```
+
+## Sources
+
+- [EmDash CMS](https://github.com/emdash-cms/emdash) -- Full-stack TypeScript CMS based on Astro
+- GitHub Docs -- [Publishing Node.js packages](https://docs.github.com/en/actions/use-cases-and-examples/publishing-packages/publishing-nodejs-packages)
+- TypeScript Docs -- [Compiler Options](https://www.typescriptlang.org/tsconfig/)

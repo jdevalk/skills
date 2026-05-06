@@ -34,3 +34,11 @@ Provide the readme.txt content by pasting it, attaching the file, or pointing th
 ```sh
 npx skills add jdevalk/skills --skill wp-readme-optimizer
 ```
+
+## Sources
+
+- Matt Cromwell -- [How I Optimize Plugin README's for Better Search Results](https://mattcromwell.com/wordpress-plugin-readme-optimization/)
+- Freemius -- [Outrank Competitors' SEO on the WordPress.org Plugin Repository](https://freemius.com/blog/seo-on-new-plugin-repository/)
+- Freemius -- [A Guide to Optimizing Your Plugin's WordPress.org Page](https://freemius.com/blog/optimizing-plugin-wordpress-page/)
+- WordPress Plugin Handbook -- [How Your Plugin Assets Work](https://developer.wordpress.org/plugins/wordpress-org/plugin-assets/)
+- SitePoint -- [How To Create an Awesome WordPress Page for Your Plugin](https://www.sitepoint.com/create-awesome-wordpress-org-page-plugin/)

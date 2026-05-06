@@ -35,3 +35,11 @@ The skill pulls context automatically via `gh` CLI when available, so it can ins
 ```sh
 npx skills add jdevalk/skills --skill github-profile
 ```
+
+## Sources
+
+- Joost de Valk -- [Good-looking GitHub profile pages](https://joost.blog/good-looking-github-profile-pages/)
+- GitHub Docs -- [Managing your profile README](https://docs.github.com/en/account-and-profile/how-tos/profile-customization/managing-your-profile-readme)
+- GitHub Docs -- [About your profile](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/customizing-your-profile/about-your-profile)
+- GitHub Docs -- [Customizing your organization's profile](https://docs.github.com/en/organizations/collaborating-with-groups-in-organizations/customizing-your-organizations-profile)
+- GitHub Docs -- [Contributions on your profile](https://docs.github.com/en/account-and-profile/concepts/contributions-on-your-profile)

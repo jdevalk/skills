@@ -5,7 +5,7 @@
 [![Link Check](https://github.com/jdevalk/skills/actions/workflows/link-check.yml/badge.svg)](https://github.com/jdevalk/skills/actions/workflows/link-check.yml)
 [![Validate Skills](https://github.com/jdevalk/skills/actions/workflows/validate-skills.yml/badge.svg)](https://github.com/jdevalk/skills/actions/workflows/validate-skills.yml)
 
-This repository collects agent skills that improve your GitHub presence, WordPress plugins, EmDash plugins, Astro sites, and the readability of your writing. You can audit and improve GitHub repos and profile pages, set up CI/CD pipelines for WordPress and EmDash plugins, rewrite WordPress.org readme files for better search rankings, audit Astro site SEO end-to-end, and run a readability pass on drafts. Each skill is a structured, score-based workflow that produces drop-in replacements.
+This repository collects agent skills that audit and improve your GitHub presence, WordPress and EmDash plugin CI/CD, WordPress.org plugin pages, Astro and static-site SEO, and the readability of your writing. There's also a tool to scrape a live WordPress site into a static HTML clone deployable on any static host. Each skill is a structured, score-based workflow that produces drop-in replacements.
 
 ## Installation
 
@@ -46,168 +46,36 @@ npx skills update astro-seo
 }
 ```
 
-This runs outside the context window on every session start, `/clear`, and compaction — zero token cost. If the latency bothers you on `/clear`, scope it to startup only by checking the `source` field in the hook input.
+This runs outside the context window on every session start, `/clear`, and compaction — zero token cost.
 
 ## What's included
 
-### 🔧 GitHub Repo Optimizer
+Each skill links to its own README with the full audit checklist, recipes, and sources.
 
-Audits a GitHub repository against best practices and generates the files that make a repo look professional: README, CONTRIBUTING.md, SECURITY.md, issue/PR templates, and more. Scores six categories out of 60 and produces drop-in replacements for anything that's missing or weak.
+### GitHub
 
-**Trigger phrases:** *"improve my repo"*, *"set up issue templates"*, *"make my GitHub project look professional"*
+- 🔧 **[github-repo](github-repo/)** — Audits a repo and generates the files that make it look professional: README, CONTRIBUTING, SECURITY, issue/PR templates, CODEOWNERS. Scores six categories. *Triggers:* "improve my repo", "set up issue templates", "make my GitHub project look professional".
+- 👤 **[github-profile](github-profile/)** — Reviews your profile (bio, pinned repos, profile README, stats, contributions) and generates an optimised profile README. Personal and organisation profiles. *Triggers:* "make my GitHub look good", "create a profile README", "optimize my developer profile".
 
-<details>
-<summary><strong>Sources</strong></summary>
+### CI/CD pipelines
 
-- Joost de Valk — [How to create a healthy GitHub repository](https://joost.blog/healthy-github-repository/)
-- GitHub Docs — [About READMEs](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes)
-- GitHub Docs — [Setting guidelines for repository contributors](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/setting-guidelines-for-repository-contributors)
-- GitHub Docs — [Creating a default community health file](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/creating-a-default-community-health-file)
-- GitHub Docs — [Configuring issue templates for your repository](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository)
-- GitHub Docs — [About rulesets](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets)
-- GitHub Docs — [Customizing your repository's social media preview](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/customizing-your-repositorys-social-media-preview)
+- ⚙️ **[wp-github-actions](wp-github-actions/)** — Sets up a complete GitHub Actions pipeline for WordPress plugins: WPCS/PHPCS, PHP/JS/CSS linting, PHPUnit, PHPStan, Composer security, Playground PR previews, automated deployment to WordPress.org. *Triggers:* "add CI to my WordPress plugin", "deploy my plugin to WordPress.org automatically".
+- 🔷 **[emdash-github-actions](emdash-github-actions/)** — Sets up GitHub Actions for EmDash plugins: TypeScript type-checking, ESLint, Vitest, npm security auditing, automated npm publishing on release. *Triggers:* "add CI to my EmDash plugin", "publish my EmDash plugin to npm automatically".
 
-</details>
+### WordPress
 
-### 👤 GitHub Profile Optimizer
+- 📝 **[wp-readme-optimizer](wp-readme-optimizer/)** — Reviews a WordPress.org plugin `readme.txt`, scores each section, and produces a fully rewritten version optimised for search visibility and install conversion. *Triggers:* "optimize my readme", "review my plugin listing", "make my plugin page better".
+- 🧊 **[wp-static-clone](wp-static-clone/)** — Clones a live WordPress site into a static HTML site deployable on any static host (Cloudflare Pages, Netlify, Vercel, S3+CloudFront, plain Apache/nginx). Handles Cloudflare bot protection, mid-scrape link rewriting, comment-form runtime, Yoast attribution, and Gravatar privacy. *Triggers:* "scrape this WordPress site", "freeze [domain] as static HTML", "move this WP site to [host] with no build step".
 
-Reviews a GitHub profile page — bio, pinned repos, profile README, stats widgets, contribution visibility — and generates an optimized profile README. Works for both personal and organization profiles.
+### SEO
 
-**Trigger phrases:** *"make my GitHub look good"*, *"create a profile README"*, *"optimize my developer profile"*
+- 🚀 **[astro-seo](astro-seo/)** — Audits and improves SEO for Astro sites across nine categories: head metadata, JSON-LD graph, content collections, OG image generation, sitemaps + IndexNow, agent discovery, performance, redirects, build validation. Recipes route through [`@jdevalk/astro-seo-graph`](https://github.com/jdevalk/seo-graph). *Triggers:* "audit my Astro SEO", "set up SEO for my Astro site", "add structured data to my Astro blog".
+- 🌐 **[static-seo](static-seo/)** — Same audit framework as `astro-seo`, but for any static HTML site (Hugo, Jekyll, 11ty, Gatsby, Next.js static export, hand-rolled, or `wp-static-clone` output). Platform-neutral recipes — raw `<meta>`, raw JSON-LD, hand-rolled `sitemap.xml`, generic CI tooling. *Triggers:* "audit the SEO on my static site", "set up structured data for my Hugo site", "add IndexNow and a sitemap to my Jekyll project".
 
-<details>
-<summary><strong>Sources</strong></summary>
+### Writing quality
 
-- Joost de Valk — [Good-looking GitHub profile pages](https://joost.blog/good-looking-github-profile-pages/)
-- GitHub Docs — [Managing your profile README](https://docs.github.com/en/account-and-profile/how-tos/profile-customization/managing-your-profile-readme)
-- GitHub Docs — [About your profile](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/customizing-your-profile/about-your-profile)
-- GitHub Docs — [Customizing your organization's profile](https://docs.github.com/en/organizations/collaborating-with-groups-in-organizations/customizing-your-organizations-profile)
-- GitHub Docs — [Contributions on your profile](https://docs.github.com/en/account-and-profile/concepts/contributions-on-your-profile)
-
-</details>
-
-### ⚙️ WordPress GitHub Actions
-
-Sets up a complete GitHub Actions CI/CD pipeline for WordPress plugins. The skill analyzes your plugin's structure — Composer, JS/CSS assets, tests, WordPress.org listing — and picks the workflows you need. Coverage includes:
-
-- Coding standards (WPCS/PHPCS)
-- PHP and JS/CSS linting
-- PHPUnit testing and PHPStan static analysis
-- Composer security scanning
-- WordPress Playground PR previews
-- Automated deployment to WordPress.org
-
-**Trigger phrases:** *"add CI to my WordPress plugin"*, *"set up GitHub Actions for my plugin"*, *"deploy my plugin to WordPress.org automatically"*
-
-<details>
-<summary><strong>Sources</strong></summary>
-
-- Joost de Valk — [GitHub Actions to keep your WordPress plugin healthy](https://joost.blog/github-actions-wordpress/)
-- [10up/wpcs-action](https://github.com/10up/wpcs-action) — WordPress Coding Standards GitHub Action
-- [10up/action-wordpress-plugin-deploy](https://github.com/10up/action-wordpress-plugin-deploy) — Deploy to WordPress.org
-- [WordPress/action-wp-playground-pr-preview](https://github.com/WordPress/action-wp-playground-pr-preview) — Playground PR previews
-- WordPress Developer Blog — [How to add automated unit tests to your WordPress plugin](https://developer.wordpress.org/news/2025/12/how-to-add-automated-unit-tests-to-your-wordpress-plugin/)
-
-</details>
-
-### 🔷 EmDash GitHub Actions
-
-Sets up GitHub Actions CI/CD workflows for EmDash plugins. The skill analyzes your plugin's structure — TypeScript source, React admin UI, tests, npm publishing — and picks the workflows you need. Coverage includes:
-
-- TypeScript type-checking with `emdash` types
-- ESLint linting
-- Vitest testing
-- npm security auditing
-- Automated npm publishing on release
-
-**Trigger phrases:** *"add CI to my EmDash plugin"*, *"set up GitHub Actions for my EmDash plugin"*, *"publish my EmDash plugin to npm automatically"*
-
-<details>
-<summary><strong>Sources</strong></summary>
-
-- [EmDash CMS](https://github.com/emdash-cms/emdash) — Full-stack TypeScript CMS based on Astro
-- GitHub Docs — [Publishing Node.js packages](https://docs.github.com/en/actions/use-cases-and-examples/publishing-packages/publishing-nodejs-packages)
-- TypeScript Docs — [Compiler Options](https://www.typescriptlang.org/tsconfig/)
-
-</details>
-
-### 📝 WordPress Readme Optimizer
-
-Reviews a WordPress.org plugin `readme.txt` with a structured audit, scores each section, and produces a fully rewritten version optimized for search visibility and install conversion.
-
-**Trigger phrases:** *"optimize my readme"*, *"review my plugin listing"*, *"make my plugin page better"*
-
-<details>
-<summary><strong>Sources</strong></summary>
-
-- Matt Cromwell — [How I Optimize Plugin README's for Better Search Results](https://mattcromwell.com/wordpress-plugin-readme-optimization/)
-- Freemius — [Outrank Competitors' SEO on the WordPress.org Plugin Repository](https://freemius.com/blog/seo-on-new-plugin-repository/)
-- Freemius — [A Guide to Optimizing Your Plugin's WordPress.org Page](https://freemius.com/blog/optimizing-plugin-wordpress-page/)
-- WordPress Plugin Handbook — [How Your Plugin Assets Work](https://developer.wordpress.org/plugins/wordpress-org/plugin-assets/)
-- SitePoint — [How To Create an Awesome WordPress Page for Your Plugin](https://www.sitepoint.com/create-awesome-wordpress-org-page-plugin/)
-
-</details>
-
-### 🚀 Astro SEO
-
-Audits and improves SEO for Astro sites across nine categories: the `<Seo>` component and head metadata, linked JSON-LD graphs, content-collection Zod schemas, auto-generated Open Graph images, per-collection sitemaps with git-based lastmod, IndexNow submission, schema endpoints and schema maps for agent discovery, redirects and `FuzzyRedirect`, and performance defaults. The stack is opinionated and routes most fixes through [`@jdevalk/astro-seo-graph`](https://github.com/jdevalk/seo-graph).
-
-**Trigger phrases:** *"audit my Astro SEO"*, *"set up SEO for my Astro site"*, *"add structured data to my Astro blog"*
-
-<details>
-<summary><strong>Sources</strong></summary>
-
-- Joost de Valk — [Astro SEO: the definitive guide](https://joost.blog/astro-seo-complete-guide/)
-- [`@jdevalk/astro-seo-graph`](https://github.com/jdevalk/seo-graph) — the `<Seo>` component, schema endpoints, IndexNow, FuzzyRedirect, build validation
-- [`@astrojs/sitemap`](https://docs.astro.build/en/guides/integrations-guide/sitemap/) — per-collection sitemaps
-- [IndexNow](https://www.indexnow.org/) — active indexing protocol
-- [NLWeb](https://github.com/nlweb-ai/NLWeb) — agent discovery protocol
-
-</details>
-
-### 📖 Readability Check
-
-Runs a readability audit on a blog post draft, calibrated for readers who read English as a second language. The skill checks nine categories:
-
-- Paragraph structure and lead sentences
-- Opening paragraph strength
-- Tiered sentence length
-- Passive voice
-- Difficult words (judged by L2 conversational use, not syllable count)
-- Filler and hedging
-- Transitions
-- Variation
-- Heading hierarchy
-
-Output combines a Flesch Reading Ease score (with target bands) and a per-category status. Each issue quotes the problem text with a concrete fix, and specific passages that work get called out too. In technical posts, the skill holds non-technical paragraphs — intros, context, conclusions — to a stricter L2 standard than the technical sections.
-
-**Trigger phrases:** *"check readability"*, *"is this readable"*, *"readability pass"*
-
-<details>
-<summary><strong>Sources</strong></summary>
-
-- Yoast — [Readability analysis in Yoast SEO](https://yoast.com/features/readability-analysis/)
-- Rudolf Flesch — [Flesch Reading Ease formula](https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests)
-- Hemingway Editor — sentence-length tiering
-
-</details>
-
-### 🏷 Metadata Check
-
-Reviews short high-value strings — page titles, meta descriptions, schema description fields, FAQ answers, GitHub repo taglines, profile bios, social-card copy — where Flesch scoring and paragraph-level readability checks don't apply. Per string, the skill checks:
-
-- Front-loading (most specific word near the start)
-- Concreteness (names, numbers, specific claims)
-- Aggressive filler and hedging removal
-- Active voice
-- No title/description duplication
-- Difficult-word substitution
-- Platform truncation fit (Google SERP, GitHub description, Twitter bio, OG)
-- One idea per field
-
-Output is per-string: the original, length, a ✓/⚠/✗ per check, and a concrete rewrite when something fails. Chained into by `astro-seo`, `wp-readme-optimizer`, `github-repo`, and `github-profile` for their metadata outputs.
-
-**Trigger phrases:** *"check my metadata"*, *"review my tagline"*, *"is this bio any good"*
+- 📖 **[readability-check](readability-check/)** — Readability audit calibrated for L2 English readers. Nine categories, Flesch Reading Ease score, quoted issues with concrete fixes. *Triggers:* "check readability", "is this readable", "readability pass".
+- 🏷 **[metadata-check](metadata-check/)** — Reviews short high-value strings — page titles, meta descriptions, schema descriptions, FAQ answers, repo taglines, profile bios, social-card copy. Eight checks (front-loading, concreteness, filler removal, active voice, dedup, difficult words, truncation fit, one idea per field). Chained into by `astro-seo`, `static-seo`, `wp-readme-optimizer`, `github-repo`, and `github-profile`. *Triggers:* "check my metadata", "review my tagline", "is this bio any good".
 
 ## License
 

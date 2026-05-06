@@ -36,3 +36,11 @@ The skill detects your project shape automatically -- you do not need to describ
 ```sh
 npx skills add jdevalk/skills --skill astro-seo
 ```
+
+## Sources
+
+- Joost de Valk -- [Astro SEO: the definitive guide](https://joost.blog/astro-seo-complete-guide/)
+- [`@jdevalk/astro-seo-graph`](https://github.com/jdevalk/seo-graph) -- the `<Seo>` component, schema endpoints, IndexNow, FuzzyRedirect, build validation
+- [`@astrojs/sitemap`](https://docs.astro.build/en/guides/integrations-guide/sitemap/) -- per-collection sitemaps
+- [IndexNow](https://www.indexnow.org/) -- active indexing protocol
+- [NLWeb](https://github.com/nlweb-ai/NLWeb) -- agent discovery protocol

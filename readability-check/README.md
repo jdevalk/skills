@@ -40,3 +40,9 @@ For short strings (titles, descriptions, bios, taglines), use **metadata-check**
 ```sh
 npx skills add jdevalk/skills --skill readability-check
 ```
+
+## Sources
+
+- Yoast -- [Readability analysis in Yoast SEO](https://yoast.com/features/readability-analysis/)
+- Rudolf Flesch -- [Flesch Reading Ease formula](https://en.wikipedia.org/wiki/Flesch%E2%80%93Kincaid_readability_tests)
+- Hemingway Editor -- sentence-length tiering
