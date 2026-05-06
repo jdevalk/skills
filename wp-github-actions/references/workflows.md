@@ -53,7 +53,7 @@ jobs:
 ### Configuration options
 
 | Input | Default | What it does |
-|---|---|---|
+| --- | --- | --- |
 | `standard` | `WordPress` | Which standard to use. Options: `WordPress`, `WordPress-Core`, `WordPress-Docs`, `WordPress-Extra`, `WordPress-VIP-Go`, `WordPressVIPMinimum`, `10up-Default` |
 | `enable_warnings` | `false` | Show warnings in addition to errors |
 | `only_changed_lines` | (empty) | Only lint lines changed in the PR — great for legacy codebases |
@@ -397,7 +397,7 @@ jobs:
 ### Configuration options
 
 | Input | What it does |
-|---|---|
+| --- | --- |
 | `plugin-path` | Path to the plugin directory (`.` if the plugin is at the repo root) |
 | `theme-path` | Use this instead of `plugin-path` if it's a theme |
 | `mode` | `append-to-description` (updates PR body) or `comment` (posts a comment) |
@@ -533,7 +533,7 @@ jobs:
 ### Deploy configuration
 
 | Setting | Default | What it does |
-|---|---|---|
+| --- | --- | --- |
 | `generate-zip` | `false` | Create a ZIP file of the deployed plugin |
 | `dry-run` | `false` | Skip the final SVN commit (for testing) |
 | `build_dir` | (empty) | Deploy from this directory instead of repo root |
