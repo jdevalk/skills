@@ -29,6 +29,7 @@ The skill detects your project shape automatically -- you do not need to describ
 
 - **metadata-check** -- automatically invoked on all generated SEO strings (titles, descriptions, schema fields)
 - **readability-check** -- recommended as a follow-up for auditing blog post prose
+- **static-seo** -- if the site is *not* an Astro project (Hugo, Jekyll, 11ty, Gatsby, Next.js static export, hand-rolled HTML, or `wp-static-clone` output), use that skill instead. Same audit framework, platform-neutral recipes, no `@jdevalk/astro-seo-graph` dependency.
 
 ## Install
 

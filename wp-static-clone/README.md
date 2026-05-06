@@ -25,6 +25,10 @@ Trigger this skill when you want to scrape a WordPress site and deploy it as sta
 
 The broad shape (sitemap → wget → root-relative paths → static host) generalises to any CMS that emits a standard XML sitemap. The runtime cleanup is WordPress-specific.
 
+## Works with
+
+- **static-seo** -- the natural follow-up. After cloning, run `static-seo` to audit head metadata, structured data, sitemaps, and indexing on the produced static HTML.
+
 ## Install
 
 ```sh
