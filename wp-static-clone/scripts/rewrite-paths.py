@@ -7,11 +7,19 @@ moves. This pass converts both forms — plus srcset entries and inter-page
 links — to root-relative `/wp-content/...` and `/<slug>/`.
 
 Usage:
-    rewrite-paths.py <output_dir> <urls.txt> [--source-domain example.com]
+    rewrite-paths.py <output_dir> <urls.txt>
+                     [--source-domain example.com]
+                     [--asset-roots wp-content,wp-includes]
 
 The page-slug list is derived from `urls.txt`, not from a directory walk —
 otherwise wget-grabbed archive directories like `category/`, `feed/`,
 `author/`, `wp-json/` get wrongly classified as pages.
+
+Defaults are WordPress-shaped (`wp-content`, `wp-includes`). For other
+sources, pass `--asset-roots` with a comma-separated list — the script is
+otherwise CMS-agnostic. Examples: `static,media` for some Hugo themes,
+`sites/default/files,sites/default/themes` for Drupal, `content/images`
+for Ghost.
 """
 
 from __future__ import annotations
@@ -22,17 +30,17 @@ import re
 import sys
 from urllib.parse import urlparse
 
-ROOTS = {'wp-content', 'wp-includes'}
 ATTRS = r'(?:href|src|content|action|data-src|data-href)'
 
 
-def page_slugs_from_urls(urls_file: pathlib.Path) -> list[str]:
+def page_slugs_from_urls(urls_file: pathlib.Path, roots: set[str]) -> list[str]:
     """Return the list of top-level page slugs from the sitemap URL list.
 
     A slug is the first path segment of any URL that has at least one
     segment. Homepage (`/`) yields no slug. Multi-segment URLs contribute
     only their first segment, since wget collapses them under that
-    directory.
+    directory. Asset roots are excluded so they don't get treated as
+    pages.
     """
     slugs: set[str] = set()
     for line in urls_file.read_text(encoding='utf-8').splitlines():
@@ -43,15 +51,22 @@ def page_slugs_from_urls(urls_file: pathlib.Path) -> list[str]:
         if not path:
             continue
         slugs.add(path.split('/', 1)[0])
-    return sorted(slugs - ROOTS)
+    return sorted(slugs - roots)
 
 
-def make_rewriter(slugs: list[str], source_domain: str | None):
-    asset_re = re.compile(r'(\.\./)+(wp-(?:content|includes))/')
-    bare_asset_re = re.compile(rf'({ATTRS}=["\'])(wp-(?:content|includes)/)')
+def make_rewriter(
+    slugs: list[str],
+    roots: list[str],
+    source_domain: str | None,
+):
+    roots_alt = '|'.join(re.escape(r) for r in roots)
+    asset_re = re.compile(rf'(\.\./)+({roots_alt})/')
+    bare_asset_re = re.compile(rf'({ATTRS}=["\'])(({roots_alt})/)')
     srcset_re = re.compile(r'srcset=["\']([^"\']+)["\']')
     index_up_re = re.compile(rf'({ATTRS}=["\'])(\.\./)+index\.html')
     index_bare_re = re.compile(rf'({ATTRS}=["\'])index\.html(["\'#])')
+    srcset_up_re = re.compile(rf'^(?:\.\./)+(({roots_alt})/)')
+    srcset_bare_prefixes = tuple(f'{r}/' for r in roots)
 
     slug_passes = []
     for slug in slugs:
@@ -62,8 +77,8 @@ def make_rewriter(slugs: list[str], source_domain: str | None):
             rf'\1/{slug}/',
         ))
 
-    abs_uploads_re = (
-        re.compile(rf'https?://{re.escape(source_domain)}/wp-content/uploads/')
+    abs_root_re = (
+        re.compile(rf'https?://{re.escape(source_domain)}/({roots_alt})/')
         if source_domain else None
     )
 
@@ -74,8 +89,8 @@ def make_rewriter(slugs: list[str], source_domain: str | None):
             if not entry:
                 continue
             url, *rest = entry.split(None, 1)
-            url = re.sub(r'^(?:\.\./)+(wp-(?:content|includes)/)', r'/\1', url)
-            if url.startswith(('wp-content/', 'wp-includes/')):
+            url = srcset_up_re.sub(r'/\1', url)
+            if url.startswith(srcset_bare_prefixes):
                 url = '/' + url
             out.append(' '.join([url, *rest]))
         return f'srcset="{", ".join(out)}"'
@@ -88,8 +103,8 @@ def make_rewriter(slugs: list[str], source_domain: str | None):
             html = pattern.sub(replacement, html)
         html = index_up_re.sub(r'\1/', html)
         html = index_bare_re.sub(r'\1/\2', html)
-        if abs_uploads_re is not None:
-            html = abs_uploads_re.sub('/wp-content/uploads/', html)
+        if abs_root_re is not None:
+            html = abs_root_re.sub(r'/\1/', html)
         return html
 
     return rewrite
@@ -101,8 +116,16 @@ def main() -> int:
     parser.add_argument('urls_file', type=pathlib.Path)
     parser.add_argument(
         '--source-domain',
-        help='Strip this absolute origin from /wp-content/uploads/ URLs '
-             '(og:image, lightbox hrefs, etc.). Bare hostname, no scheme.',
+        help='Strip this absolute origin from any asset-root URL '
+             '(og:image, JSON-LD image, lightbox hrefs, etc.). Bare '
+             'hostname, no scheme.',
+    )
+    parser.add_argument(
+        '--asset-roots',
+        default='wp-content,wp-includes',
+        help='Comma-separated list of top-level directories that hold '
+             'assets (CSS, JS, images). Default: wp-content,wp-includes '
+             '(WordPress). Pass other roots for non-WP sources.',
     )
     args = parser.parse_args()
 
@@ -113,8 +136,13 @@ def main() -> int:
         print(f'urls_file not found: {args.urls_file}', file=sys.stderr)
         return 1
 
-    slugs = page_slugs_from_urls(args.urls_file)
-    rewrite = make_rewriter(slugs, args.source_domain)
+    roots = [r.strip() for r in args.asset_roots.split(',') if r.strip()]
+    if not roots:
+        print('--asset-roots cannot be empty', file=sys.stderr)
+        return 1
+
+    slugs = page_slugs_from_urls(args.urls_file, set(roots))
+    rewrite = make_rewriter(slugs, roots, args.source_domain)
 
     changed = 0
     for path in args.output_dir.rglob('*.html'):

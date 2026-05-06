@@ -63,6 +63,8 @@ python3 scripts/rewrite-paths.py output/ urls.txt --source-domain example.com
 
 The script derives the page-slug list from `urls.txt`, not from a directory walk — otherwise wget-grabbed archive directories like `category/`, `feed/`, `author/`, `wp-json/` get wrongly classified as pages and their inter-page links get mis-rewritten.
 
+The script defaults to WordPress asset roots (`wp-content`, `wp-includes`). For non-WP sources, override with `--asset-roots`: e.g. `--asset-roots sites/default/files,sites/default/themes` for Drupal, `--asset-roots content/images` for Ghost. The rest of the rewriter is CMS-agnostic.
+
 ### Phase 5 — Brand the static output
 
 So future-you (or anyone reading view-source) can tell at a glance that this is the static clone, not the live WP install:
