@@ -5,7 +5,7 @@
 [![Link Check](https://github.com/jdevalk/skills/actions/workflows/link-check.yml/badge.svg)](https://github.com/jdevalk/skills/actions/workflows/link-check.yml)
 [![Validate Skills](https://github.com/jdevalk/skills/actions/workflows/validate-skills.yml/badge.svg)](https://github.com/jdevalk/skills/actions/workflows/validate-skills.yml)
 
-This repository collects agent skills that audit and improve your GitHub presence, WordPress and EmDash plugin CI/CD, WordPress.org plugin pages, Astro and static-site SEO, and the readability of your writing. There's also a tool to scrape a live WordPress site into a static HTML clone deployable on any static host. Each skill is a structured, score-based workflow that produces drop-in replacements.
+This repository collects agent skills that audit and improve your GitHub presence, WordPress / EmDash / Astro CI/CD, WordPress.org plugin pages, Astro and static-site SEO, and the readability of your writing. There's also a tool to scrape a live WordPress site into a static HTML clone deployable on any static host. Each skill is a structured, score-based workflow that produces drop-in replacements.
 
 ## Installation
 
@@ -61,6 +61,7 @@ Each skill links to its own README with the full audit checklist, recipes, and s
 
 - ⚙️ **[wp-github-actions](wp-github-actions/)** — Sets up a complete GitHub Actions pipeline for WordPress plugins: WPCS/PHPCS, PHP/JS/CSS linting, PHPUnit, PHPStan, Composer security, Playground PR previews, automated deployment to WordPress.org. *Triggers:* "add CI to my WordPress plugin", "deploy my plugin to WordPress.org automatically".
 - 🔷 **[emdash-github-actions](emdash-github-actions/)** — Sets up GitHub Actions for EmDash plugins: TypeScript type-checking, ESLint, Vitest, npm security auditing, automated npm publishing on release. *Triggers:* "add CI to my EmDash plugin", "publish my EmDash plugin to npm automatically".
+- 🚀 **[astro-github-actions](astro-github-actions/)** — Sets up GitHub Actions for Astro sites: `astro check`, ESLint, Prettier, build verification, Vitest, Lighthouse CI, link checking, npm audit, deploys to GitHub Pages, Cloudflare Pages, Netlify, or Vercel. *Triggers:* "add CI to my Astro site", "deploy my Astro site to GitHub Pages from Actions".
 
 ### WordPress
 
