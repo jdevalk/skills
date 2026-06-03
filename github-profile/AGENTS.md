@@ -36,34 +36,66 @@ Create the `username/username` repo's `README.md`. The structure below is a star
 
 ## Stats widgets
 
-Pick the ones that make sense for the person. Don't overload — 2-3 widgets is usually right.
+Default recommendation: **lowlighter/metrics**. It runs as a GitHub Action in the user's magic repo, renders an SVG, and commits it back. The README then serves a static file straight from GitHub — nothing to rate-limit, nothing to 502.
 
-### github-readme-stats (anuraghazra)
+The third-party-hosted alternatives (github-readme-stats, streak-stats, trophies) all run on shared Vercel infrastructure that regularly hits the GitHub API rate limit. They go down for hours at a time, leaving broken images on the profile. Only suggest them if the user specifically asks, and warn about the reliability problem.
 
-The most popular option with 78,000+ stars:
+### lowlighter/metrics (recommended)
 
-```markdown
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username={username}&show_icons=true&theme={theme})
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username={username}&layout=compact&theme={theme})
+Add `.github/workflows/metrics.yml` to the magic repo:
+
+```yaml
+name: Metrics
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/workflows/metrics.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  github-metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: lowlighter/metrics@latest
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: {username}
+          template: classic
+          base: header, activity, community, repositories, metadata
+          plugin_languages: yes
+          plugin_languages_details: bytes-size, percentage
+          plugin_languages_limit: 6
+          plugin_isocalendar: yes
+          plugin_isocalendar_duration: half-year
 ```
 
-Over 30 themes available. Can be self-hosted on Vercel to avoid rate limits.
-
-### github-readme-streak-stats (DenverCoder1)
-
-Contribution streaks:
+Reference the generated SVG in the README:
 
 ```markdown
-![GitHub Streak](https://streak-stats.demolab.com/?user={username}&theme={theme})
+![Metrics](./github-metrics.svg)
 ```
 
-### github-profile-trophy (ryo-ma)
+User-side setup:
 
-Trophy icons:
+1. Create a PAT at https://github.com/settings/tokens/new with `public_repo` and `read:user` scopes
+2. Add it as a repo secret named `METRICS_TOKEN` (`gh secret set METRICS_TOKEN --repo {username}/{username}`)
+3. Push the workflow — the first run commits `github-metrics.svg` back to the repo
 
-```markdown
-![Trophies](https://github-profile-trophy.vercel.app/?username={username}&theme={theme}&no-frame=true&row=1)
-```
+Useful additional plugins beyond the defaults: `plugin_followup` (issues/PRs ratio), `plugin_topics` (repo topics word cloud), `plugin_lines` (lines of code), `plugin_traffic` (repo views — needs `repo` scope, not just `public_repo`). Full list: https://github.com/lowlighter/metrics/blob/master/source/plugins/README.md
+
+### Third-party-hosted alternatives (use with caution)
+
+These services 502 frequently. Only suggest if the user asks for them directly.
+
+- **github-readme-stats** (anuraghazra) — `https://github-readme-stats.vercel.app/api?username={username}` and `/api/top-langs/?username={username}`. 30+ themes. Can be self-hosted on Vercel with a personal token to avoid the shared rate limit.
+- **github-readme-streak-stats** (DenverCoder1) — `https://streak-stats.demolab.com/?user={username}`. Same shared-infra reliability problem.
+- **github-profile-trophy** (ryo-ma) — `https://github-profile-trophy.vercel.app/?username={username}&no-frame=true&row=1`. Same shared-infra reliability problem.
 
 ## Badges for tech stack and social links
 

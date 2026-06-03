@@ -8,7 +8,7 @@ Audits a GitHub profile's public presence and generates an optimized profile REA
 - **Profile metadata** -- photo, bio (160 chars), company, location, website, social links, pronouns, status
 - **Pinned repositories** -- all 6 slots used, descriptions filled, variety, star count, alignment with goals
 - **Contribution activity** -- contribution graph, private contributions visibility, achievement badges
-- **Stats widgets** -- github-readme-stats, streak stats, trophies, with theme recommendations
+- **Stats widgets** -- recommends self-hosted SVG via `lowlighter/metrics` (GitHub Action) over Vercel-hosted services that 502 unpredictably
 - **Tech stack badges** -- shields.io badges with Simple Icons for languages and tools
 - **Social links** -- badge-style links to LinkedIn, Twitter/X, blog, email
 

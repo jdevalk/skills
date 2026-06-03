@@ -142,5 +142,5 @@ Score table (4 categories, each x/10, total x/40) → Findings grouped by catego
 - **Scannable over comprehensive.** A profile is skimmed in 10 seconds. Cut anything that doesn't earn its space.
 - **Personality over template.** Adapt tone, structure, and content to the person's goals and audience. A creative developer and a startup founder need different profiles.
 - **Every field filled.** Empty metadata fields, missing pinned repos, and blank descriptions are missed opportunities.
-- **Dynamic where it adds value.** Stats widgets and auto-updating blog feeds keep a profile fresh, but don't overload — 2-3 widgets is usually right.
+- **Dynamic where it adds value.** A stats image (via `lowlighter/metrics`) and an optional auto-updating blog feed keep a profile fresh — one of each is usually plenty. Avoid third-party-hosted widgets that 502 unpredictably; see `AGENTS.md`.
 - **Cross-link everything.** GitHub, LinkedIn, Twitter/X, personal site — each profile should point to the others.
