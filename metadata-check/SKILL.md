@@ -16,7 +16,7 @@ description: >
 
 # Metadata check
 
-Reviews short, high-value strings where every character counts — titles, meta descriptions, schema descriptions, FAQ answers, taglines, bios, and social-card copy. Flesch scoring and the nine-category readability rubric don't fit a 5–30 word string; this skill applies the checks that do.
+Reviews short, high-value strings where every character counts — titles, meta descriptions, schema descriptions, FAQ answers, taglines, bios, and social-card copy. Flesch scoring and the ten-category readability rubric don't fit a 5–30 word string; this skill applies the checks that do.
 
 Use this skill for anything in the metadata-string shape. For multi-paragraph prose (blog posts, READMEs, CONTRIBUTING files), use `readability-check` instead.
 
