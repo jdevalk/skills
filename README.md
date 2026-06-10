@@ -75,7 +75,8 @@ Each skill links to its own README with the full audit checklist, recipes, and s
 
 ### Writing quality
 
-- 📖 **[readability-check](readability-check/)** — Readability audit calibrated for L2 English readers. Nine categories, Flesch Reading Ease score, quoted issues with concrete fixes. *Triggers:* "check readability", "is this readable", "readability pass".
+- 📖 **[readability-check](readability-check/)** — Readability audit calibrated for L2 English readers. Ten categories, Flesch Reading Ease score, quoted issues with concrete fixes. *Triggers:* "check readability", "is this readable", "readability pass".
+- 🎯 **[content-seo](content-seo/)** — Audits a post draft for whether it earns a ranking: search intent fit, focus keyphrase placement, E-E-A-T, helpfulness and originality, freshness, internal linking. Three-way verdict — ready, fixable, or wrong content for the query. *Triggers:* "will this rank", "SEO check this post", "content SEO audit".
 - 🏷 **[metadata-check](metadata-check/)** — Reviews short high-value strings — page titles, meta descriptions, schema descriptions, FAQ answers, repo taglines, profile bios, social-card copy. Eight checks (front-loading, concreteness, filler removal, active voice, dedup, difficult words, truncation fit, one idea per field). Chained into by `astro-seo`, `static-seo`, `wp-readme-optimizer`, `github-repo`, and `github-profile`. *Triggers:* "check my metadata", "review my tagline", "is this bio any good".
 
 ## License
