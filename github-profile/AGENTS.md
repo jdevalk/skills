@@ -83,11 +83,11 @@ Reference the generated SVG in the README:
 
 User-side setup:
 
-1. Create a PAT at https://github.com/settings/tokens/new with `public_repo` and `read:user` scopes
+1. Create a PAT at <https://github.com/settings/tokens/new> with `public_repo` and `read:user` scopes
 2. Add it as a repo secret named `METRICS_TOKEN` (`gh secret set METRICS_TOKEN --repo {username}/{username}`)
 3. Push the workflow — the first run commits `github-metrics.svg` back to the repo
 
-Useful additional plugins beyond the defaults: `plugin_followup` (issues/PRs ratio), `plugin_topics` (repo topics word cloud), `plugin_lines` (lines of code), `plugin_traffic` (repo views — needs `repo` scope, not just `public_repo`). Full list: https://github.com/lowlighter/metrics/blob/master/source/plugins/README.md
+Useful additional plugins beyond the defaults: `plugin_followup` (issues/PRs ratio), `plugin_topics` (repo topics word cloud), `plugin_lines` (lines of code), `plugin_traffic` (repo views — needs `repo` scope, not just `public_repo`). Full list: <https://github.com/lowlighter/metrics/blob/master/source/plugins/README.md>
 
 ### Third-party-hosted alternatives (use with caution)
 
