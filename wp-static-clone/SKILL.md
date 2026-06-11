@@ -133,7 +133,7 @@ These are the things that bit us. Don't repeat them.
 
 4. **WordPress Offload Media plugins** route `/wp-content/uploads/` to R2 / S3 buckets. wget may successfully fetch an image even when later direct access 404s (intermittent or partial bucket sync). Trust your local copy — that's why we scrape and self-host.
 
-5. **Sitemaps and the Yoast XSL aren't linked from HTML.** wget `-p` won't find them. Fetch explicitly in Phase 1.
+5. **Sitemaps and the Yoast XSL aren't linked from HTML.** wget `-p` won't find them. Fetch explicitly in Phase 1. And after fetching, **repoint each sitemap's `<?xml-stylesheet?>` at the local copy** — Yoast emits it as a protocol-relative absolute URL (`href="//<domain>/wp-content/.../main-sitemap.xsl"`). Left alone, the browser fetches it cross-origin from the live site, the XSLT transform is blocked, and the sitemap renders **blank** (view-source shows the XML fine — only the styled render breaks). `rewrite-paths.py` won't catch it: it processes `*.html` only, and its abs-URL rule matches `https?://`, not `//`. Recipe in Phase 1 of `AGENTS.md`.
 
 6. **Filenames with `?ver=...` query strings.** wget keeps these as literal filenames; HTML uses `%3F` encoding. Standard servers (Pages, Netlify, Vercel, `python -m http.server`) URL-decode and serve correctly. Don't try to "clean these up" unless something actually breaks.
 
