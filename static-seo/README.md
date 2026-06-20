@@ -9,7 +9,7 @@ Audits and improves the SEO setup of a static HTML site across nine categories, 
 - **Content quality** -- title and description hygiene, frontmatter consistency, body text readability
 - **Open Graph images** -- 1200x675 JPEG, deterministic per-page URLs, alt text on every `<img>`
 - **Sitemaps and indexing** -- `sitemap.xml` reachable, referenced from `robots.txt`, RSS feed with full content, IndexNow integration
-- **Agent discovery** -- schema endpoints, schema map, `llms.txt`, markdown alternates, API catalog (RFC 9727), Content Signals, MCP / A2A discovery cards
+- **Agent discovery** -- schema endpoints, schema map, `llms.txt`, markdown alternates, API catalog (RFC 9727), Content Signals, MCP / A2A discovery cards, ARD catalog, OKF bundle
 - **Performance** -- cache headers on hashed assets, font preload, no render-blocking JS, image optimisation
 - **Redirects** -- `_redirects` / `vercel.json` / nginx maintained, 301 not 302, custom 404 returns 404 status
 - **CI validation** -- broken-link checking, HTML validation, Lighthouse CI, schema validation

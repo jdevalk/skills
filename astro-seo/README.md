@@ -9,7 +9,7 @@ Audits and improves the SEO setup of an Astro site across nine categories, then 
 - **Content collections** -- Zod schemas, SEO field validation, `articleBody` in schema endpoints
 - **Open Graph images** -- 1200x675 JPEG generation via satori + sharp, alt text validation
 - **Sitemaps and indexing** -- sitemap index, RSS feed, IndexNow integration, git-based `lastmod`
-- **Agent discovery** -- schema endpoints, schema map, `llms.txt`, markdown alternates, NLWeb
+- **Agent discovery** -- schema endpoints, schema map, `llms.txt`, markdown alternates, NLWeb, ARD catalog, OKF bundle
 - **Performance** -- static output, zero client JS, image optimization, font preloading, caching headers
 - **Redirects** -- `_redirects` file, `FuzzyRedirect` on the 404 page, correct status codes
 - **Build-time validation** -- H1 checks, unique metadata, internal link validation, broken link CI

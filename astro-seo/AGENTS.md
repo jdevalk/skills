@@ -279,6 +279,35 @@ Add CORS headers in `_headers` so cross-origin agents can fetch them:
 
 Wire both into the sitewide `Link` header (next section).
 
+## ARD catalog and OKF bundle
+
+Both are v0.9 drafts — optional, not recommended. Publish ARD once the site has more than one agent-facing surface worth listing; publish an OKF bundle when the content collection is worth shipping as a packaged knowledge base.
+
+**ARD catalog** ([Agentic Resource Discovery](https://agenticresourcediscovery.org/)) — a static JSON file at `public/.well-known/ai-catalog.json` listing the domain's agent-facing resources. Each entry carries **both** `type` and `mediaType` with the same value: the base spec ([`Agent-Card/ai-catalog`](https://github.com/Agent-Card/ai-catalog)) reads `mediaType`, the ARD layer ([`ards-project/ard-spec`](https://github.com/ards-project/ard-spec)) reads `type`, and both ignore unknown keys, so the dual-field entry validates either way. `representativeQueries` is an optional array of sample prompts.
+
+```json
+{
+    "version": "0.9",
+    "entries": [
+        {
+            "name": "OKF bundle",
+            "type": "application/okf-bundle+gzip",
+            "mediaType": "application/okf-bundle+gzip",
+            "url": "https://example.com/okf.tar.gz",
+            "representativeQueries": ["What does this site document?"]
+        },
+        {
+            "name": "MCP server",
+            "type": "application/json",
+            "mediaType": "application/json",
+            "url": "https://example.com/.well-known/mcp/server-card.json"
+        }
+    ]
+}
+```
+
+**OKF bundle** ([Open Knowledge Format](https://github.com/GoogleCloudPlatform/knowledge-catalog)) — a tree of typed Markdown concept files (one per page, paths mirroring canonical URLs) plus index files, served as a single `okf.tar.gz`. Generate it as one more output of the build that already produces sitemap / llms.txt / markdown alternates, not a second copy to keep in sync. There is **no registered media type yet**; ship `application/okf-bundle+gzip` as a single documented constant marked interim (tracked in [knowledge-catalog#111](https://github.com/GoogleCloudPlatform/knowledge-catalog/issues/111) and [ard-spec#27](https://github.com/ards-project/ard-spec/issues/27)). Reuse the same CORS / cache `_headers` block as the other `.well-known` files, and add the catalog to the sitewide `Link` header (next section) as `rel="ai-catalog"`.
+
 ## Link headers for agent discovery
 
 A single `Link` header on `/*` consolidates the discovery surface: sitemap, llms.txt, api-catalog, schemamap, and any MCP / A2A cards. Agents reading response headers don't have to load HTML to find any of them.

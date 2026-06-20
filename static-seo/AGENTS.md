@@ -357,6 +357,29 @@ Set the `Content-Type` via `_headers` (CF Pages / Netlify) or `vercel.json`:
     Cache-Control: max-age=300
 ```
 
+## ARD catalog and OKF bundle
+
+Both are v0.9 drafts — optional, not recommended. Publish ARD once the site has more than one agent-facing surface worth listing; publish an OKF bundle when the content is worth shipping as a packaged knowledge base.
+
+**ARD catalog** ([Agentic Resource Discovery](https://agenticresourcediscovery.org/)) — a static JSON file at `/.well-known/ai-catalog.json` listing the domain's agent-facing resources (MCP server, A2A agent, OKF bundle, site-specific APIs). Each entry carries **both** `type` and `mediaType` with the same value: the base spec ([`Agent-Card/ai-catalog`](https://github.com/Agent-Card/ai-catalog)) reads `mediaType`, the ARD layer ([`ards-project/ard-spec`](https://github.com/ards-project/ard-spec)) reads `type`, and both ignore unknown keys, so the dual-field entry validates either way. `representativeQueries` is an optional array of sample prompts.
+
+```json
+{
+    "version": "0.9",
+    "entries": [
+        {
+            "name": "OKF bundle",
+            "type": "application/okf-bundle+gzip",
+            "mediaType": "application/okf-bundle+gzip",
+            "url": "https://example.com/okf.tar.gz",
+            "representativeQueries": ["What does this site document?"]
+        }
+    ]
+}
+```
+
+**OKF bundle** ([Open Knowledge Format](https://github.com/GoogleCloudPlatform/knowledge-catalog)) — a tree of typed Markdown concept files (one per page, paths mirroring canonical URLs) plus index files, served as a single `okf.tar.gz`. Generate it from the same source the rest of the site derives from, not a hand-maintained copy. There is **no registered media type yet**; ship `application/okf-bundle+gzip` as a single documented constant marked interim (tracked in [knowledge-catalog#111](https://github.com/GoogleCloudPlatform/knowledge-catalog/issues/111) and [ard-spec#27](https://github.com/ards-project/ard-spec/issues/27)). Set the bundle's `Content-Type` via `_headers` / `vercel.json`, and add the catalog to the sitewide `Link` header (next section) as `rel="ai-catalog"`.
+
 ## `Link` headers for agent discovery
 
 A single `Link` header on `/*` consolidates the discovery surface — sitemap, llms.txt, api-catalog, schemamap, RSS — so agents reading response headers don't have to load HTML.
