@@ -29,6 +29,17 @@ mkdir -p output/wp-content/plugins/wordpress-seo/css
 curl -s -A "Mozilla/5.0" \
     "$ROOT/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl" \
     -o output/wp-content/plugins/wordpress-seo/css/main-sitemap.xsl
+
+# Repoint the sitemaps' <?xml-stylesheet?> at the LOCAL copy. Yoast emits it as a
+# protocol-relative absolute URL (`href="//<domain>/wp-content/.../main-sitemap.xsl"`).
+# Left alone, the browser fetches the XSL cross-origin from the live site, the XSLT
+# transform is blocked, and the sitemap renders as a BLANK page (raw XML is fine in
+# view-source — only the styled render breaks). rewrite-paths.py won't fix this: it
+# only touches *.html, and its abs-URL rule matches `https?://`, not `//`.
+SRC=${ROOT#http*://}                       # bare domain, e.g. example.com
+for f in output/*.xml; do
+    perl -0pi -e "s{href=\"(?:https?:)?//\Q$SRC\E(/wp-content/plugins/wordpress-seo/css/main-sitemap\.xsl)\"}{href=\"\$1\"}g" "$f"
+done
 ```
 
 ## Phase 2 — One-shot wget
